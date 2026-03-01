@@ -1,0 +1,10 @@
+{
+  "type": "customrecords:custom_music_disc",
+  "category": "misc",
+  "fragment": {
+    "item": "customrecords:custom_music_disc_fragment"
+  },
+  "result": {
+    "item": "customrecords:custom_music_disc"
+  }
+}

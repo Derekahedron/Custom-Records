@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "package": "derekahedron.customrecords.mixin",
+  "refmap": "customrecords.refmap.json",
+  "mixins": [
+    "EntityMixin",
+    "ItemEntityMixin",
+    "JukeboxBlockEntityMixin",
+    "JukeboxBlockMixin",
+    "ServerLevelMixin"
+  ],
+  "client": [
+    "client.GuiMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

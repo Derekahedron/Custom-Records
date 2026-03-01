@@ -1,0 +1,12 @@
+{
+  "values": [
+    "minecraft:cactus",
+    "#minecraft:is_fire",
+    "#minecraft:is_explosion",
+    "#minecraft:is_lightning",
+    {
+      "id": "alexscaves:acid",
+      "required": false
+    }
+  ]
+}

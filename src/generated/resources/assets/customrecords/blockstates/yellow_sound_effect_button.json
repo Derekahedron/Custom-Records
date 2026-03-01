@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=down,pressed=false": {
+      "model": "customrecords:block/yellow_sound_effect_button",
+      "x": 180
+    },
+    "facing=down,pressed=true": {
+      "model": "customrecords:block/yellow_sound_effect_button_pressed",
+      "x": 180
+    },
+    "facing=east,pressed=false": {
+      "model": "customrecords:block/yellow_sound_effect_button",
+      "x": 270,
+      "y": 270
+    },
+    "facing=east,pressed=true": {
+      "model": "customrecords:block/yellow_sound_effect_button_pressed",
+      "x": 270,
+      "y": 270
+    },
+    "facing=north,pressed=false": {
+      "model": "customrecords:block/yellow_sound_effect_button",
+      "x": 270,
+      "y": 180
+    },
+    "facing=north,pressed=true": {
+      "model": "customrecords:block/yellow_sound_effect_button_pressed",
+      "x": 270,
+      "y": 180
+    },
+    "facing=south,pressed=false": {
+      "model": "customrecords:block/yellow_sound_effect_button",
+      "x": 270
+    },
+    "facing=south,pressed=true": {
+      "model": "customrecords:block/yellow_sound_effect_button_pressed",
+      "x": 270
+    },
+    "facing=up,pressed=false": {
+      "model": "customrecords:block/yellow_sound_effect_button"
+    },
+    "facing=up,pressed=true": {
+      "model": "customrecords:block/yellow_sound_effect_button_pressed"
+    },
+    "facing=west,pressed=false": {
+      "model": "customrecords:block/yellow_sound_effect_button",
+      "x": 270,
+      "y": 90
+    },
+    "facing=west,pressed=true": {
+      "model": "customrecords:block/yellow_sound_effect_button_pressed",
+      "x": 270,
+      "y": 90
+    }
+  }
+}

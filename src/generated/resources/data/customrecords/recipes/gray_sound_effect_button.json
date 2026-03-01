@@ -1,0 +1,14 @@
+{
+  "type": "customrecords:dye_sound_effect_button",
+  "category": "redstone",
+  "group": "sound_effect_button_dye",
+  "input": {
+    "tag": "customrecords:dyeable_sound_effect_buttons"
+  },
+  "material": {
+    "item": "minecraft:gray_dye"
+  },
+  "result": {
+    "item": "customrecords:gray_sound_effect_button"
+  }
+}

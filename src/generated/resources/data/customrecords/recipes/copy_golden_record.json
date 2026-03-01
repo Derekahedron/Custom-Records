@@ -1,0 +1,13 @@
+{
+  "type": "customrecords:copy_golden_record",
+  "blank_record": {
+    "item": "customrecords:blank_silver_record"
+  },
+  "category": "misc",
+  "record": {
+    "item": "customrecords:golden_record"
+  },
+  "result": {
+    "item": "customrecords:silver_record"
+  }
+}

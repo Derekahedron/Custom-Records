@@ -1,0 +1,29 @@
+{
+  "language.name": "English",
+  "language.region": "United States",
+  "language.code": "en_us",
+
+  "item.customrecords.blank_silver_record": "Blank Silver Record",
+  "item.customrecords.silver_record": "Silver Record",
+  "item.customrecords.golden_record": "Golden Record",
+  "item.customrecords.custom_music_disc_fragment": "Disc Fragment",
+  "item.customrecords.custom_music_disc": "Music Disc",
+
+  "block.customrecords.white_sound_effect_button": "White Sound Effect Button",
+  "block.customrecords.orange_sound_effect_button": "Orange Sound Effect Button",
+  "block.customrecords.magenta_sound_effect_button": "Magenta Sound Effect Button",
+  "block.customrecords.light_blue_sound_effect_button": "Light Blue Sound Effect Button",
+  "block.customrecords.yellow_sound_effect_button": "Yellow Sound Effect Button",
+  "block.customrecords.lime_sound_effect_button": "Lime Sound Effect Button",
+  "block.customrecords.pink_sound_effect_button": "Pink Sound Effect Button",
+  "block.customrecords.gray_sound_effect_button": "Gray Sound Effect Button",
+  "block.customrecords.light_gray_sound_effect_button": "Light Gray Sound Effect Button",
+  "block.customrecords.purple_sound_effect_button": "Purple Sound Effect Button",
+  "block.customrecords.cyan_sound_effect_button": "Cyan Sound Effect Button",
+  "block.customrecords.blue_sound_effect_button": "Blue Sound Effect Button",
+  "block.customrecords.brown_sound_effect_button": "Brown Sound Effect Button",
+  "block.customrecords.green_sound_effect_button": "Green Sound Effect Button",
+  "block.customrecords.red_sound_effect_button": "Red Sound Effect Button",
+  "block.customrecords.black_sound_effect_button": "Black Sound Effect Button",
+  "block.customrecords.global_sound_effect_button": "Global Sound Effect Button"
+}

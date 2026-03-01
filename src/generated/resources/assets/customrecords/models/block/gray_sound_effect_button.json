@@ -1,0 +1,6 @@
+{
+  "parent": "customrecords:block/sound_effect_button_base",
+  "textures": {
+    "texture": "customrecords:block/gray_sound_effect_button"
+  }
+}

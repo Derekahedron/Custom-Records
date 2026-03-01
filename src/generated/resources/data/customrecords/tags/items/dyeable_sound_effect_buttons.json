@@ -1,0 +1,20 @@
+{
+  "values": [
+    "customrecords:white_sound_effect_button",
+    "customrecords:orange_sound_effect_button",
+    "customrecords:magenta_sound_effect_button",
+    "customrecords:light_blue_sound_effect_button",
+    "customrecords:yellow_sound_effect_button",
+    "customrecords:lime_sound_effect_button",
+    "customrecords:pink_sound_effect_button",
+    "customrecords:gray_sound_effect_button",
+    "customrecords:light_gray_sound_effect_button",
+    "customrecords:purple_sound_effect_button",
+    "customrecords:cyan_sound_effect_button",
+    "customrecords:blue_sound_effect_button",
+    "customrecords:brown_sound_effect_button",
+    "customrecords:green_sound_effect_button",
+    "customrecords:red_sound_effect_button",
+    "customrecords:black_sound_effect_button"
+  ]
+}

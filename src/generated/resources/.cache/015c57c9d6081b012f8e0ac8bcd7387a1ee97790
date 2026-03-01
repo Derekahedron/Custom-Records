@@ -1,0 +1,9 @@
+// 1.20.1	2026-02-22T20:58:04.2824729	Custom Records Item Tags
+72d277a70dc120317a898c36459653b1a3af75b3 data/customrecords/tags/items/dyeable_sound_effect_buttons.json
+50030974d60180ae22dfb806f6bd515647b8d804 data/customrecords/tags/items/immune_to_damage.json
+50030974d60180ae22dfb806f6bd515647b8d804 data/customrecords/tags/items/never_despawns.json
+7704a97101fa87ec161a1194b01a6b4c26f8540c data/customrecords/tags/items/sound_effect_buttons.json
+977710f552dfe7831983545a35d5a5f25e1af1c7 data/invexp/tags/items/sack_type/button.json
+48f3baf5ff022f81fe3740b1dde79cf863c5a07c data/invexp/tags/items/sack_type/music_disc.json
+977710f552dfe7831983545a35d5a5f25e1af1c7 data/invexp/tags/items/sack_weight/half.json
+53ec1658bda52b5b3563fd56c21314ba7e4d61b0 data/minecraft/tags/items/music_discs.json
