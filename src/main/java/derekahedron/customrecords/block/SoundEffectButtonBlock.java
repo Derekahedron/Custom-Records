@@ -37,10 +37,6 @@ public class SoundEffectButtonBlock extends AbstractSoundEffectButton {
         }
         state = state.setValue(POWERED, true);
         super.press(state, level, pos, pressingEntity);
-
-        if (state.getValue(POWERING)) {
-            updateNeighbours(state, level, pos);
-        }
     }
 
     @Override

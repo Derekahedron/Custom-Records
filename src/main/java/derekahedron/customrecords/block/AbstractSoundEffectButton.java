@@ -135,6 +135,9 @@ public abstract class AbstractSoundEffectButton extends DirectionalBlock impleme
 
         level.gameEvent(pressingEntity, GameEvent.BLOCK_ACTIVATE, pos);
         level.scheduleTick(pos, this, TICKS_TO_STAY_PRESSED);
+        if (isPowering(state)) {
+            updateNeighbours(state, level, pos);
+        }
     }
 
     public void unpress(BlockState state, Level level, BlockPos pos) {
