@@ -6,7 +6,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -67,12 +66,6 @@ public class CustomMusicDiscFragmentItem extends Item implements MusicDiscTrackH
             return track.get().fragmentRarity().get();
         }
         return super.getRarity(stack);
-    }
-
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        if (super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged)) return true;
-        return !RecordTrackHolder.hasSameTrack(oldStack, newStack, CRUtil.getRegistryAccess());
     }
 
     @Override

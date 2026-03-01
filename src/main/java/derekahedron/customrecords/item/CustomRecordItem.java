@@ -29,10 +29,4 @@ public abstract class CustomRecordItem<T extends MusicTrack> extends RecordItem 
         String descriptionId = getDescriptionId(track.key().location()) + ".desc";
         components.add(Component.translatable(descriptionId).withStyle(ChatFormatting.GRAY));
     }
-
-    @Override
-    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-        if (super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged)) return true;
-        return !RecordTrackHolder.hasSameTrack(oldStack, newStack, CRUtil.getRegistryAccess());
-    }
 }

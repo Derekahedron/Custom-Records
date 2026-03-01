@@ -73,6 +73,7 @@ public class SoundEffectButtonBlock extends AbstractSoundEffectButton {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void neighborChanged(
             BlockState state, Level level, BlockPos pos, Block block, BlockPos neighborPos, boolean p_55046_) {
         boolean powered = isPowered(state, level, pos);

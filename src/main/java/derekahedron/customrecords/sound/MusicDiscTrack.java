@@ -1,11 +1,8 @@
 package derekahedron.customrecords.sound;
 
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import derekahedron.customrecords.util.CRUtil;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -13,8 +10,6 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.Rarity;
 
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public record MusicDiscTrack(
         ResourceLocation soundEvent,

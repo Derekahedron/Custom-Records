@@ -3,7 +3,6 @@ package derekahedron.customrecords.util;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import derekahedron.customrecords.CustomRecords;
 import derekahedron.customrecords.client.util.ClientProxy;
 import net.minecraft.core.RegistryAccess;
