@@ -3,9 +3,10 @@ package derekahedron.customrecords.sound;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 
 public record GoldenRecordTrack(
-        ResourceLocation soundEvent,
+        SoundEvent soundEvent,
         int analogOutput,
         int lengthInTicks,
         boolean inCreativeInventory
@@ -14,6 +15,7 @@ public record GoldenRecordTrack(
     public static final Codec<GoldenRecordTrack> CODEC =
             RecordCodecBuilder.create(instance -> instance.group(
                     ResourceLocation.CODEC
+                            .xmap(SoundEvent::createVariableRangeEvent, SoundEvent::getLocation)
                             .fieldOf("sound_event")
                             .forGetter(GoldenRecordTrack::soundEvent),
                     Codec.INT

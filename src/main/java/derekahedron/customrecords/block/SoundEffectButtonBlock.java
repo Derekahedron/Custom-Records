@@ -1,9 +1,10 @@
 package derekahedron.customrecords.block;
 
+import derekahedron.customrecords.network.CRPacketHandler;
+import derekahedron.customrecords.network.PlaySoundEffectButtonPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -12,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 
@@ -46,7 +48,22 @@ public class SoundEffectButtonBlock extends AbstractSoundEffectButton {
     }
 
     public void playSound(@Nullable Player player, Level level, BlockPos pos, SoundEvent soundEffect) {
-        level.playSound(player, pos, soundEffect, SoundSource.BLOCKS, 1, 1);
+        if (!level.isClientSide()) {
+            CRPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(
+                    null,
+                    pos.getX(), pos.getY(), pos.getZ(),
+                    64.0D,
+                    level.dimension()
+            )), new PlaySoundEffectButtonPacket(pos, soundEffect));
+        }
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!isMoving && !state.is(newState.getBlock()) && !level.isClientSide()) {
+            CRPacketHandler.INSTANCE.send(PacketDistributor.DIMENSION.with(level::dimension), new PlaySoundEffectButtonPacket(pos));
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     public boolean isPowering(BlockState state) {

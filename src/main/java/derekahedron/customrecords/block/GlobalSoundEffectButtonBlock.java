@@ -1,12 +1,13 @@
 package derekahedron.customrecords.block;
 
+import derekahedron.customrecords.network.CRPacketHandler;
+import derekahedron.customrecords.network.PlayGlobalSoundEffectButtonPacket;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 public class GlobalSoundEffectButtonBlock extends AbstractSoundEffectButton {
@@ -18,9 +19,15 @@ public class GlobalSoundEffectButtonBlock extends AbstractSoundEffectButton {
     @Override
     public void playSound(@Nullable Player player, Level level, BlockPos pos, SoundEvent soundEffect) {
         if (!level.isClientSide()) {
-            for (ServerPlayer serverPlayer : ((ServerLevel) level).getServer().getPlayerList().getPlayers()) {
-                serverPlayer.playNotifySound(soundEffect, SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
+            CRPacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new PlayGlobalSoundEffectButtonPacket(level.dimension(), pos, soundEffect));
         }
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!isMoving && !state.is(newState.getBlock()) && !level.isClientSide()) {
+            CRPacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new PlayGlobalSoundEffectButtonPacket(level.dimension(), pos));
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 }

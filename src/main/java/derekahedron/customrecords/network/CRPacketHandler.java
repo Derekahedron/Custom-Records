@@ -31,6 +31,16 @@ public class CRPacketHandler {
                     PlaySophisticatedCustomRecordPacket::toBytes,
                     PlaySophisticatedCustomRecordPacket::new,
                     PlaySophisticatedCustomRecordPacket::handle);
+            INSTANCE.registerMessage(getId(),
+                    PlaySoundEffectButtonPacket.class,
+                    PlaySoundEffectButtonPacket::toBytes,
+                    PlaySoundEffectButtonPacket::new,
+                    PlaySoundEffectButtonPacket::handle);
+            INSTANCE.registerMessage(getId(),
+                    PlayGlobalSoundEffectButtonPacket.class,
+                    PlayGlobalSoundEffectButtonPacket::toBytes,
+                    PlayGlobalSoundEffectButtonPacket::new,
+                    PlayGlobalSoundEffectButtonPacket::handle);
         });
     }
 }

@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 
 public class PlayCustomRecordPacketHandler {
@@ -21,7 +20,7 @@ public class PlayCustomRecordPacketHandler {
         if (track == null) return;
 
         Minecraft.getInstance().levelRenderer.playStreamingMusic(
-                SoundEvent.createVariableRangeEvent(track.get().soundEvent()),
+                track.get().soundEvent(),
                 packet.blockPos(),
                 null);
 

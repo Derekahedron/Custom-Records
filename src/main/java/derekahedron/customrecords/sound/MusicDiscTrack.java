@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import derekahedron.customrecords.util.CRUtil;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.Rarity;
@@ -12,7 +13,7 @@ import net.minecraft.world.item.Rarity;
 import java.util.Optional;
 
 public record MusicDiscTrack(
-        ResourceLocation soundEvent,
+        SoundEvent soundEvent,
         int analogOutput,
         int lengthInTicks,
         boolean inCreativeInventory,
@@ -26,6 +27,7 @@ public record MusicDiscTrack(
     public static final Codec<MusicDiscTrack> CODEC =
             RecordCodecBuilder.create(instance -> instance.group(
                     ResourceLocation.CODEC
+                            .xmap(SoundEvent::createVariableRangeEvent, SoundEvent::getLocation)
                             .fieldOf("sound_event")
                             .forGetter(MusicDiscTrack::soundEvent),
                     Codec.INT

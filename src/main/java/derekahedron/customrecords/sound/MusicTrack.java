@@ -1,10 +1,10 @@
 package derekahedron.customrecords.sound;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 
 public interface MusicTrack {
 
-    ResourceLocation soundEvent();
+    SoundEvent soundEvent();
 
     int analogOutput();
 

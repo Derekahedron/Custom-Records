@@ -20,7 +20,7 @@ public class PlaySophisticatedCustomRecordPacketHandler {
         Holder.Reference<? extends MusicTrack> track = item.getMusicTrack(packet.trackId(), level);
         if (track == null) return;
 
-        SoundEvent soundEvent = SoundEvent.createVariableRangeEvent(track.get().soundEvent());
+        SoundEvent soundEvent = track.get().soundEvent();
         packet.source()
                 .ifLeft(pos -> StorageSoundHandler.playStorageSound(soundEvent, packet.storageUuid(), pos))
                 .ifRight(entityId -> StorageSoundHandler.playStorageSound(soundEvent, packet.storageUuid(), entityId));

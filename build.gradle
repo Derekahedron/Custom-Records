@@ -122,8 +122,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    implementation fg.deobf("maven.modrinth:sophisticated-core:csa9YQ6L")
-    implementation fg.deobf("maven.modrinth:sophisticated-backpacks:5hqZZ6lY")
+    implementation fg.deobf("maven.modrinth:sophisticated-core:6zLuPz4f")
+    implementation fg.deobf("maven.modrinth:sophisticated-backpacks:vwLaW2sx")
 }
 
 mixin {
