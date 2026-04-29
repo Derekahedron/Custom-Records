@@ -54,7 +54,16 @@ public class CustomMusicDiscItem extends CustomRecordItem<MusicDiscTrack> implem
     public Rarity getRarity(ItemStack stack) {
         Holder.Reference<MusicDiscTrack> track = getMusicTrack(stack, CRUtil.getRegistryAccess());
         if (track != null && track.get().rarity().isPresent()) {
-            return track.get().rarity().get();
+            Rarity rarity = track.get().rarity().get();
+            if (!stack.isEnchanted()) {
+                return rarity;
+            } else {
+                return switch (rarity) {
+                    case COMMON, UNCOMMON -> Rarity.RARE;
+                    case RARE -> Rarity.EPIC;
+                    default -> rarity;
+                };
+            }
         }
         return super.getRarity(stack);
     }

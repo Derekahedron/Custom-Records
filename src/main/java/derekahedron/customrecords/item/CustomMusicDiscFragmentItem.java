@@ -63,7 +63,16 @@ public class CustomMusicDiscFragmentItem extends Item implements MusicDiscTrackH
     public Rarity getRarity(ItemStack stack) {
         Holder.Reference<MusicDiscTrack> track = getMusicTrack(stack, CRUtil.getRegistryAccess());
         if (track != null && track.get().fragmentRarity().isPresent()) {
-            return track.get().fragmentRarity().get();
+            Rarity rarity = track.get().fragmentRarity().get();
+            if (!stack.isEnchanted()) {
+                return rarity;
+            } else {
+                return switch (rarity) {
+                    case COMMON, UNCOMMON -> Rarity.RARE;
+                    case RARE -> Rarity.EPIC;
+                    default -> rarity;
+                };
+            }
         }
         return super.getRarity(stack);
     }

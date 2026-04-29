@@ -22,6 +22,7 @@ public class SoundEffectButtonItem extends BlockItem {
         super(block, properties);
     }
 
+    @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag advanced) {
         super.appendHoverText(stack, level, components, advanced);
         ResourceLocation soundEffectId = getSoundEffectId(stack);
@@ -38,7 +39,8 @@ public class SoundEffectButtonItem extends BlockItem {
         return ResourceLocation.tryParse(tag.getString(SOUND_EFFECT_KEY));
     }
 
-    public void putSoundEffectId(ItemStack stack, @Nullable ResourceLocation soundEffectId) {
-        CRUtil.putResourceLocation(stack, SOUND_EFFECT_KEY, soundEffectId);
+    @SuppressWarnings("UnusedReturnValue")
+    public ItemStack putSoundEffectId(ItemStack stack, @Nullable ResourceLocation soundEffectId) {
+        return CRUtil.putResourceLocation(stack, SOUND_EFFECT_KEY, soundEffectId);
     }
 }
