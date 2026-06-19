@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -129,8 +130,18 @@ public abstract class AbstractSoundEffectButton extends DirectionalBlock impleme
         Player player = pressingEntity instanceof Player ? (Player) pressingEntity : null;
 
         level.setBlock(pos, state, 3);
-        if (level.getBlockEntity(pos) instanceof SoundEffectButtonBlockEntity blockEntity && blockEntity.soundEffect != null) {
-            playSound(player, level, pos, blockEntity.soundEffect);
+        if (level.getBlockEntity(pos) instanceof SoundEffectButtonBlockEntity blockEntity) {
+            if (blockEntity.soundEffect != null) {
+                playSound(player, level, pos, blockEntity.soundEffect);
+            } else {
+                level.playSound(
+                        player,
+                        pos,
+                        getClickOnSoundEvent(),
+                        SoundSource.BLOCKS,
+                        1.0F,
+                        1.0F);
+            }
         }
 
         level.gameEvent(pressingEntity, GameEvent.BLOCK_ACTIVATE, pos);
@@ -145,6 +156,18 @@ public abstract class AbstractSoundEffectButton extends DirectionalBlock impleme
         level.setBlock(pos, state, 3);
         updateNeighbours(state, level, pos);
         level.gameEvent(null, GameEvent.BLOCK_DEACTIVATE, pos);
+
+        if (!level.isClientSide()
+                && level.getBlockEntity(pos) instanceof SoundEffectButtonBlockEntity blockEntity
+                && blockEntity.soundEffect == null) {
+            level.playSound(
+                    null,
+                    pos,
+                    getClickOffSoundEvent(),
+                    SoundSource.BLOCKS,
+                    1.0F,
+                    1.0F);
+        }
     }
 
     public abstract void playSound(@Nullable Player player, Level level, BlockPos pos, SoundEvent soundEffect);
@@ -294,4 +317,8 @@ public abstract class AbstractSoundEffectButton extends DirectionalBlock impleme
     public BlockState mirror(BlockState state, Mirror mirror) {
         return state.setValue(FACING, mirror.mirror(state.getValue(FACING)));
     }
+
+    public abstract SoundEvent getClickOnSoundEvent();
+
+    public abstract SoundEvent getClickOffSoundEvent();
 }

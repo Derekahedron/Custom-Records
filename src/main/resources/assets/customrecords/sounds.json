@@ -1,0 +1,42 @@
+{
+  "block.stone_sound_effect_button.click_off": {
+    "sounds": [
+      {
+        "name": "minecraft:random/click",
+        "pitch": 0.5,
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.stone_sound_effect_button.click_on": {
+    "sounds": [
+      {
+        "name": "minecraft:random/click",
+        "pitch": 0.6,
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.metal_sound_effect_button.click_off": {
+    "sounds": [
+      {
+        "name": "minecraft:random/click",
+        "pitch": 0.65,
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  },
+  "block.metal_sound_effect_button.click_on": {
+    "sounds": [
+      {
+        "name": "minecraft:random/click",
+        "pitch": 0.75,
+        "volume": 0.3
+      }
+    ],
+    "subtitle": "subtitles.block.button.click"
+  }
+}

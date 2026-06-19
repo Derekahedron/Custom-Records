@@ -25,5 +25,6 @@
   "block.customrecords.green_sound_effect_button": "Green Sound Effect Button",
   "block.customrecords.red_sound_effect_button": "Red Sound Effect Button",
   "block.customrecords.black_sound_effect_button": "Black Sound Effect Button",
+  "block.customrecords.blank_sound_effect_button": "Blank Sound Effect Button",
   "block.customrecords.global_sound_effect_button": "Global Sound Effect Button"
 }

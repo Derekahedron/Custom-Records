@@ -31,6 +31,17 @@ public class SoundEffectButtonItem extends BlockItem {
         components.add(Component.translatable(descriptionId).withStyle(ChatFormatting.GRAY));
     }
 
+    @Override
+    public int getMaxStackSize(ItemStack stack) {
+        int maxStackSize = super.getMaxStackSize(stack);
+
+        if (maxStackSize != 1 && getSoundEffectId(stack) != null) {
+            return 1;
+        } else {
+            return maxStackSize;
+        }
+    }
+
     @Nullable
     public ResourceLocation getSoundEffectId(ItemStack stack) {
         if (!(stack.getItem() instanceof SoundEffectButtonItem)) return null;

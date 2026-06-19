@@ -48,13 +48,7 @@ public class CRUtil {
             tag = stack.getOrCreateTag();
             tag.putString(key, id.toString());
         } else {
-            tag = stack.getTag();
-            if (tag != null && tag.contains(key)) {
-                tag.remove(key);
-                if (tag.isEmpty()) {
-                    stack.setTag(null);
-                }
-            }
+            stack.removeTagKey(key);
         }
 
         return stack;

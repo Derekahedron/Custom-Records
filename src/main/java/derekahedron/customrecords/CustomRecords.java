@@ -5,10 +5,13 @@ import derekahedron.customrecords.block.entity.CRBlockEntityTypes;
 import derekahedron.customrecords.compat.sophisticatedcore.SophisticatedCompat;
 import derekahedron.customrecords.item.CRCreativeTabs;
 import derekahedron.customrecords.item.CRItems;
+import derekahedron.customrecords.item.SoundEffectPredicate;
 import derekahedron.customrecords.loot.CRLootModifiers;
 import derekahedron.customrecords.network.CRPacketHandler;
 import derekahedron.customrecords.registry.CRRegistryKeys;
 import com.mojang.logging.LogUtils;
+import derekahedron.customrecords.sound.CRSoundEvents;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModList;
@@ -32,6 +35,7 @@ public class CustomRecords {
         CRBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
         CRRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         CRLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
+        CRSoundEvents.SOUND_EVENTS.register(modEventBus);
 
         modEventBus.addListener(CRPacketHandler::initialize);
         modEventBus.addListener(CRRegistryKeys::initialize);
@@ -44,6 +48,8 @@ public class CustomRecords {
                 LOGGER.error("Sophisticated Core integration failed to load. Probably due to not being on the right version");
             }
         }
+
+        ItemPredicate.register(SoundEffectPredicate.ID, SoundEffectPredicate::deserializeFromJson);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

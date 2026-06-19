@@ -1,6 +1,7 @@
 {
   "values": [
     "#customrecords:dyeable_sound_effect_buttons",
+    "customrecords:blank_sound_effect_button",
     "customrecords:global_sound_effect_button"
   ]
 }

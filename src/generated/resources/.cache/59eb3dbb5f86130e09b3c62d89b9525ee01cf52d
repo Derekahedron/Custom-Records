@@ -1,5 +1,6 @@
-// 1.20.1	2026-02-22T20:58:04.2809663	Loot Tables
+// 1.20.1	2026-06-19T14:23:35.2935761	Loot Tables
 c7955f847d733c6746c8b618b3eab76bcca87015 data/customrecords/loot_tables/blocks/black_sound_effect_button.json
+5b4f22bd28e9f477f42b113fadbe8dff4877d4b5 data/customrecords/loot_tables/blocks/blank_sound_effect_button.json
 2152bb272485d7ffef92fe8597a45bad320c34ef data/customrecords/loot_tables/blocks/blue_sound_effect_button.json
 b04485bcdd28f290b075c8319e696d2c258b63a4 data/customrecords/loot_tables/blocks/brown_sound_effect_button.json
 64ce70793a9e9e522cea2850b45ac80709c0e877 data/customrecords/loot_tables/blocks/cyan_sound_effect_button.json

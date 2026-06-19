@@ -2,6 +2,7 @@ package derekahedron.customrecords.block;
 
 import derekahedron.customrecords.network.CRPacketHandler;
 import derekahedron.customrecords.network.PlaySoundEffectButtonPacket;
+import derekahedron.customrecords.sound.CRSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -68,6 +69,16 @@ public class SoundEffectButtonBlock extends AbstractSoundEffectButton {
 
     public boolean isPowering(BlockState state) {
         return state.getValue(POWERING);
+    }
+
+    @Override
+    public SoundEvent getClickOnSoundEvent() {
+        return CRSoundEvents.BLOCK_STONE_SOUND_EFFECT_BUTTON_CLICK_ON.get();
+    }
+
+    @Override
+    public SoundEvent getClickOffSoundEvent() {
+        return CRSoundEvents.BLOCK_STONE_SOUND_EFFECT_BUTTON_CLICK_OFF.get();
     }
 
     public boolean isPowered(BlockState state, Level level, BlockPos pos) {

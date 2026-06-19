@@ -156,6 +156,13 @@ public class CRItems {
                                     .stacksTo(1)
                                     .rarity(Rarity.UNCOMMON)));
 
+    public static final RegistryObject<SoundEffectButtonItem> BLANK_SOUND_EFFECT_BUTTON =
+            ITEMS.register("blank_sound_effect_button", () ->
+                    new SoundEffectButtonItem(
+                            CRBlocks.BLANK_SOUND_EFFECT_BUTTON.get(),
+                            new Item.Properties()
+                                    .stacksTo(16)));
+
     public static final RegistryObject<SoundEffectButtonItem> GLOBAL_SOUND_EFFECT_BUTTON =
             ITEMS.register("global_sound_effect_button", () ->
                     new SoundEffectButtonItem(

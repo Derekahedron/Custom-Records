@@ -109,6 +109,12 @@ public class CRBlockStateProvider extends BlockStateProvider {
                 soundEffectButtonPressedBase,
                 soundEffectButtonInventoryBase);
 
+        SoundEffectButton(CRBlocks.BLANK_SOUND_EFFECT_BUTTON.get(),
+                CRBlocks.BLANK_SOUND_EFFECT_BUTTON.getId(),
+                soundEffectButtonBase,
+                soundEffectButtonPressedBase,
+                soundEffectButtonInventoryBase);
+
         SoundEffectButton(CRBlocks.GLOBAL_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.GLOBAL_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,

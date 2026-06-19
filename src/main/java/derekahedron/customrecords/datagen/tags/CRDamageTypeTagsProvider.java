@@ -2,11 +2,11 @@ package derekahedron.customrecords.datagen.tags;
 
 import derekahedron.customrecords.CustomRecords;
 import derekahedron.customrecords.damage.CRDamageTypeTags;
-import derekahedron.customrecords.util.CompatUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -36,6 +36,6 @@ public class CRDamageTypeTagsProvider extends TagsProvider<DamageType> {
                 .addTag(DamageTypeTags.IS_FIRE)
                 .addTag(DamageTypeTags.IS_EXPLOSION)
                 .addTag(DamageTypeTags.IS_LIGHTNING)
-                .addOptional(CompatUtil.alexsCaves("acid"));
+                .addOptional(ResourceLocation.fromNamespaceAndPath("alexscaves", "acid"));
     }
 }

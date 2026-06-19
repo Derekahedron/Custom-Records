@@ -1,4 +1,5 @@
-// 1.20.1	2026-02-22T20:58:04.2809663	Recipes
+// 1.20.1	2026-06-19T14:23:35.2943189	Recipes
+dd6404c731bd00886c45906fb668b7f1f8303759 data/customrecords/advancements/recipes/misc/copy_blank_sound_effect_button.json
 90d9d5a143714ed8b5f47f92c4e00abcf7b8b961 data/customrecords/advancements/recipes/misc/copy_golden_record.json
 e1103a7764667f16eae282006971dffdd0844780 data/customrecords/advancements/recipes/misc/custom_music_disc.json
 654cc5d32bfc068cb11f0dab14098d67b9f6d286 data/customrecords/advancements/recipes/redstone/black_sound_effect_button.json
@@ -20,6 +21,7 @@ a928d1698a27c80a1e04fe77249ba9a13d59d2e1 data/customrecords/advancements/recipes
 b647d0033862e741ec9170dbd19e96381b3e4e22 data/customrecords/recipes/black_sound_effect_button.json
 38923c510ffadf0d17332a35ea3c0f24ef883397 data/customrecords/recipes/blue_sound_effect_button.json
 126ecbe065b16c09dea829324b32a47c748f9aae data/customrecords/recipes/brown_sound_effect_button.json
+78078aa288726e0bd192b79f4db435d466bc0a1f data/customrecords/recipes/copy_blank_sound_effect_button.json
 01b99dd0ec9187dd5e7648b22aa2a57e2354ed0e data/customrecords/recipes/copy_golden_record.json
 2147682b1886dba6d70c1850316cacc99efa0631 data/customrecords/recipes/custom_music_disc.json
 39bf2b5ad35f7d67557b083a12398f4e01fcb312 data/customrecords/recipes/cyan_sound_effect_button.json

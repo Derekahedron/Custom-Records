@@ -2,12 +2,14 @@ package derekahedron.customrecords.datagen.recipes;
 
 import derekahedron.customrecords.item.CRItemTags;
 import derekahedron.customrecords.item.CRItems;
+import derekahedron.customrecords.recipe.CopySoundEffectButtonRecipe;
 import derekahedron.customrecords.util.CRUtil;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.common.crafting.CompoundIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import derekahedron.customrecords.recipe.CopyGoldenRecordRecipe;
 import derekahedron.customrecords.recipe.CustomMusicDiscRecipe;
@@ -51,6 +53,14 @@ public class CRRecipeProvider extends RecipeProvider {
         dyeSoundEffectButton(consumer, CRItems.GREEN_SOUND_EFFECT_BUTTON.get(), Items.GREEN_DYE);
         dyeSoundEffectButton(consumer, CRItems.RED_SOUND_EFFECT_BUTTON.get(), Items.RED_DYE);
         dyeSoundEffectButton(consumer, CRItems.BLACK_SOUND_EFFECT_BUTTON.get(), Items.BLACK_DYE);
+
+        new CopySoundEffectButtonRecipe.Builder(RecipeCategory.MISC,
+                CRItems.BLANK_SOUND_EFFECT_BUTTON.get(),
+                CompoundIngredient.of(
+                        Ingredient.of(CRItemTags.DYEABLE_SOUND_EFFECT_BUTTONS),
+                        Ingredient.of(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get())),
+                Ingredient.of(CRItems.BLANK_SOUND_EFFECT_BUTTON.get()))
+                .save(consumer, CRUtil.location("copy_blank_sound_effect_button"));
     }
 
     public static void dyeSoundEffectButton(Consumer<FinishedRecipe> consumer, ItemLike soundEffectButton, ItemLike dye) {

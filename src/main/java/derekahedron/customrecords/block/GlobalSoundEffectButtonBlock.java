@@ -2,6 +2,7 @@ package derekahedron.customrecords.block;
 
 import derekahedron.customrecords.network.CRPacketHandler;
 import derekahedron.customrecords.network.PlayGlobalSoundEffectButtonPacket;
+import derekahedron.customrecords.sound.CRSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
@@ -29,5 +30,15 @@ public class GlobalSoundEffectButtonBlock extends AbstractSoundEffectButton {
             CRPacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new PlayGlobalSoundEffectButtonPacket(level.dimension(), pos));
         }
         super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
+    public SoundEvent getClickOnSoundEvent() {
+        return CRSoundEvents.BLOCK_METAL_SOUND_EFFECT_BUTTON_CLICK_ON.get();
+    }
+
+    @Override
+    public SoundEvent getClickOffSoundEvent() {
+        return CRSoundEvents.BLOCK_METAL_SOUND_EFFECT_BUTTON_CLICK_OFF.get();
     }
 }

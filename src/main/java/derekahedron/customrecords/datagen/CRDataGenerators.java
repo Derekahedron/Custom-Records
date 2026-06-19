@@ -7,6 +7,8 @@ import derekahedron.customrecords.datagen.models.CRItemModelProvider;
 import derekahedron.customrecords.datagen.recipes.CRRecipeProvider;
 import derekahedron.customrecords.datagen.tags.CRDamageTypeTagsProvider;
 import derekahedron.customrecords.datagen.tags.CRItemTagsProvider;
+import derekahedron.customrecords.item.sack.CRSackWeightRules;
+import derekahedron.invexp.registry.InvExpRegistryKeys;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
@@ -47,6 +49,7 @@ public class CRDataGenerators {
                 output));
 
         RegistrySetBuilder registrySetBuilder = new RegistrySetBuilder();
+        registrySetBuilder.add(InvExpRegistryKeys.SACK_WEIGHT_RULE, CRSackWeightRules::bootstrap);
         DatapackBuiltinEntriesProvider builtinProvider =
                 generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
                         output, lookupProvider, registrySetBuilder,

@@ -1,0 +1,9 @@
+{
+  "items": {
+    "item": "customrecords:blank_sound_effect_button"
+  },
+  "predicate": {
+    "type": "customrecords:sound_effect"
+  },
+  "priority": 10
+}

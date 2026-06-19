@@ -16,4 +16,6 @@ public class CRRecipeSerializers {
             RECIPE_SERIALIZERS.register("custom_music_disc", CustomMusicDiscRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<DyeSoundEffectButtonRecipe>> DYE_SOUND_EFFECT_BUTTON =
             RECIPE_SERIALIZERS.register("dye_sound_effect_button", DyeSoundEffectButtonRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<CopySoundEffectButtonRecipe>> COPY_BLANK_SOUND_EFFECT_BUTTON =
+            RECIPE_SERIALIZERS.register("copy_sound_effect_button", CopySoundEffectButtonRecipe.Serializer::new);
 }

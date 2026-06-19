@@ -3,7 +3,7 @@ package derekahedron.customrecords.datagen.tags;
 import derekahedron.customrecords.CustomRecords;
 import derekahedron.customrecords.item.CRItemTags;
 import derekahedron.customrecords.item.CRItems;
-import derekahedron.customrecords.util.CompatUtil;
+import derekahedron.invexp.item.InvExpItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -36,14 +36,14 @@ public class CRItemTagsProvider extends ItemTagsProvider {
                 .add(CRItems.GOLDEN_RECORD.get())
                 .add(CRItems.CUSTOM_MUSIC_DISC.get());
 
-        tag(ItemTags.create(CompatUtil.inventoryExpansion("sack_type/button")))
+        tag(InvExpItemTags.SackType.BUTTON)
                 .addTag(CRItemTags.SOUND_EFFECT_BUTTONS);
 
-        tag(ItemTags.create(CompatUtil.inventoryExpansion("sack_type/music_disc")))
+        tag(InvExpItemTags.SackType.MUSIC_DISC)
                 .add(CRItems.BLANK_SILVER_RECORD.get())
                 .add(CRItems.CUSTOM_MUSIC_DISC_FRAGMENT.get());
 
-        tag(ItemTags.create(CompatUtil.inventoryExpansion("sack_weight/half")))
+        tag(InvExpItemTags.SackWeight.HALF)
                 .addTag(CRItemTags.SOUND_EFFECT_BUTTONS);
 
         tag(CRItemTags.IMMUNE_TO_DAMAGE)
@@ -56,6 +56,7 @@ public class CRItemTagsProvider extends ItemTagsProvider {
 
         tag(CRItemTags.SOUND_EFFECT_BUTTONS)
                 .addTag(CRItemTags.DYEABLE_SOUND_EFFECT_BUTTONS)
+                .add(CRItems.BLANK_SOUND_EFFECT_BUTTON.get())
                 .add(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get());
 
         tag(CRItemTags.DYEABLE_SOUND_EFFECT_BUTTONS)

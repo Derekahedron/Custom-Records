@@ -31,6 +31,7 @@ public class CRBlockEntityTypes {
                                     CRBlocks.GREEN_SOUND_EFFECT_BUTTON.get(),
                                     CRBlocks.RED_SOUND_EFFECT_BUTTON.get(),
                                     CRBlocks.BLACK_SOUND_EFFECT_BUTTON.get(),
+                                    CRBlocks.BLANK_SOUND_EFFECT_BUTTON.get(),
                                     CRBlocks.GLOBAL_SOUND_EFFECT_BUTTON.get())
                             .build(null));
 }

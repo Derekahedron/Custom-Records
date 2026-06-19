@@ -43,6 +43,7 @@ public class CRBlockLoot extends BlockLootSubProvider {
         dropSoundEffectButton(CRBlocks.GREEN_SOUND_EFFECT_BUTTON.get());
         dropSoundEffectButton(CRBlocks.RED_SOUND_EFFECT_BUTTON.get());
         dropSoundEffectButton(CRBlocks.BLACK_SOUND_EFFECT_BUTTON.get());
+        dropSoundEffectButton(CRBlocks.BLANK_SOUND_EFFECT_BUTTON.get());
         dropSoundEffectButton(CRBlocks.GLOBAL_SOUND_EFFECT_BUTTON.get());
     }
 
