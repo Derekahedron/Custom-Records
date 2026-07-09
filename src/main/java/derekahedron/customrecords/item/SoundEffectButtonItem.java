@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class SoundEffectButtonItem extends BlockItem {
+
     public static final String SOUND_EFFECT_KEY = "SoundEffect";
 
     public SoundEffectButtonItem(Block block, Properties properties) {

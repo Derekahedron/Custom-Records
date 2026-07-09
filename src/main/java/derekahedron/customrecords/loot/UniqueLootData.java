@@ -16,14 +16,18 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class UniqueLootData extends SavedData {
+
     public static final String LOOT_RECORDS_KEY = "LootRecords";
     public static final String STORAGE_KEY = CustomRecords.MOD_ID + "_unique_loot_log";
+
     public final List<UniqueLootRecord> uniqueLootRecords;
     public final Map<ResourceLocation, Integer> uniqueLootRecordCounts;
+    public final Map<UUID, Map<ResourceLocation, Long>> uniqueLootRecordTimestamps;
 
     public UniqueLootData(int initialCapacity) {
         uniqueLootRecords = new ArrayList<>(initialCapacity);
         uniqueLootRecordCounts = new HashMap<>();
+        uniqueLootRecordTimestamps = new HashMap<>();
     }
 
     public UniqueLootData() {
@@ -39,10 +43,22 @@ public class UniqueLootData extends SavedData {
         return uniqueLootRecordCounts.getOrDefault(name, 0);
     }
 
+    public Optional<Long> getRecordTimestamp(UUID playerUUID, ResourceLocation name) {
+        return Optional.ofNullable(uniqueLootRecordTimestamps.get(playerUUID))
+                .flatMap(m -> Optional.ofNullable(m.get(name)));
+    }
+
     public void addRecord(UniqueLootRecord record) {
+        addRecordNoDirty(record);
+        setDirty(true);
+    }
+
+    public void addRecordNoDirty(UniqueLootRecord record) {
         uniqueLootRecords.add(record);
         uniqueLootRecordCounts.put(record.name, getNumRecords(record.name) + 1);
-        setDirty(true);
+        if (record.playerUUID.isPresent() && getRecordTimestamp(record.playerUUID.get(), record.name).map(timestamp -> timestamp < record.timestamp).orElse(true)) {
+            uniqueLootRecordTimestamps.computeIfAbsent(record.playerUUID.get(), (uuid) -> new HashMap<>()).put(record.name, record.timestamp);
+        }
     }
 
     public static UniqueLootData load(CompoundTag tag) {
@@ -52,10 +68,7 @@ public class UniqueLootData extends SavedData {
         for (int i = 0; i < lootRecords.size(); i++) {
             UniqueLootRecord record = UniqueLootRecord.load(lootRecords.getCompound(i));
             if (record != null) {
-                data.uniqueLootRecords.add(record);
-                data.uniqueLootRecordCounts.put(
-                        record.name,
-                        data.getNumRecords(record.name) + 1);
+                data.addRecordNoDirty(record);
             }
         }
 

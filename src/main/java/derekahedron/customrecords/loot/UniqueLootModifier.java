@@ -18,19 +18,33 @@ import net.minecraftforge.common.loot.LootModifier;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.UUID;
 
 public class UniqueLootModifier extends LootModifier {
     public static final Codec<UniqueLootModifier> CODEC = RecordCodecBuilder.create(inst ->
             codecStart(inst).and(
                     Entry.CODEC.listOf().fieldOf("items").forGetter(m -> m.items)
+            ).and(
+                    Codec.LONG.optionalFieldOf("cooldown", 0L).forGetter(m -> m.cooldown)
+            ).and(
+                    Codec.BOOL.optionalFieldOf("block_during_cooldown", true).forGetter(m -> m.blockDuringCooldown)
             ).apply(inst, UniqueLootModifier::new));
 
     public final List<Entry> items;
+    public final long cooldown;
+    public final boolean blockDuringCooldown;
 
+    @SuppressWarnings("unused")
     public UniqueLootModifier(LootItemCondition[] conditionsIn, List<Entry> items) {
+        this(conditionsIn, items, 0L, true);
+    }
+
+    public UniqueLootModifier(LootItemCondition[] conditionsIn, List<Entry> items, long cooldown, boolean blockDuringCooldown) {
         super(conditionsIn);
         this.items = items;
+        this.cooldown = cooldown;
+        this.blockDuringCooldown = blockDuringCooldown;
     }
 
     @Override
@@ -41,7 +55,6 @@ public class UniqueLootModifier extends LootModifier {
                 .toList();
 
         if (!validEntries.isEmpty()) {
-            Entry entry = validEntries.get(context.getRandom().nextInt(validEntries.size()));
 
             Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
             Optional<BlockPos> pos = origin != null
@@ -81,6 +94,28 @@ public class UniqueLootModifier extends LootModifier {
                 distance = Optional.empty();
             }
 
+            // Get latest time that the player has gotten a unique entry
+            long now = System.currentTimeMillis();
+            if (playerUUID.isPresent() && cooldown > 0) {
+                OptionalLong latestTimestamp = items.stream()
+                        .map(entry -> data.getRecordTimestamp(playerUUID.get(), entry.name))
+                        .filter(Optional::isPresent)
+                        .mapToLong(Optional::get)
+                        .max();
+
+                if (latestTimestamp.isPresent()) {
+                    long timeSince = now - latestTimestamp.getAsLong();
+
+                    if (timeSince >= 0 && timeSince < cooldown) {
+                        if (blockDuringCooldown || context.getRandom().nextFloat() >= (float) timeSince / cooldown) {
+                            return generatedLoot;
+                        }
+                    }
+                }
+            }
+
+            Entry entry = validEntries.get(context.getRandom().nextInt(validEntries.size()));
+
             data.addRecord(new UniqueLootData.UniqueLootRecord(
                     entry.name,
                     playerUUID,
@@ -88,7 +123,7 @@ public class UniqueLootModifier extends LootModifier {
                     distance,
                     pos,
                     context.getLevel().dimension(),
-                    System.currentTimeMillis()));
+                    now));
             generatedLoot.add(entry.item);
         }
 

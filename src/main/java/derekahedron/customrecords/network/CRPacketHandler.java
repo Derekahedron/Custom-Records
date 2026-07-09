@@ -36,11 +36,6 @@ public class CRPacketHandler {
                     PlaySoundEffectButtonPacket::toBytes,
                     PlaySoundEffectButtonPacket::new,
                     PlaySoundEffectButtonPacket::handle);
-            INSTANCE.registerMessage(getId(),
-                    PlayGlobalSoundEffectButtonPacket.class,
-                    PlayGlobalSoundEffectButtonPacket::toBytes,
-                    PlayGlobalSoundEffectButtonPacket::new,
-                    PlayGlobalSoundEffectButtonPacket::handle);
         });
     }
 }

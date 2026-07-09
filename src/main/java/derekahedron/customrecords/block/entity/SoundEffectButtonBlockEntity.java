@@ -11,7 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public class SoundEffectButtonBlockEntity extends BlockEntity {
+
     public static final String SOUND_EFFECT_KEY = "SoundEffect";
+
     @Nullable
     public SoundEvent soundEffect = null;
 

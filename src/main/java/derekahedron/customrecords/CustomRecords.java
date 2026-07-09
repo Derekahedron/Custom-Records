@@ -11,6 +11,7 @@ import derekahedron.customrecords.network.CRPacketHandler;
 import derekahedron.customrecords.registry.CRRegistryKeys;
 import com.mojang.logging.LogUtils;
 import derekahedron.customrecords.sound.CRSoundEvents;
+import derekahedron.customrecords.stats.CRStats;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -36,10 +37,12 @@ public class CustomRecords {
         CRRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         CRLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
         CRSoundEvents.SOUND_EVENTS.register(modEventBus);
+        CRStats.CUSTOM_STATS.register(modEventBus);
 
         modEventBus.addListener(CRPacketHandler::initialize);
         modEventBus.addListener(CRRegistryKeys::initialize);
         modEventBus.addListener(CRCreativeTabs::initialize);
+        modEventBus.addListener(CRStats::initialize);
 
         if (ModList.get().isLoaded("sophisticatedcore")) {
             try {

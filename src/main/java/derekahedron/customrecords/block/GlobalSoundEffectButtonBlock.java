@@ -1,7 +1,7 @@
 package derekahedron.customrecords.block;
 
 import derekahedron.customrecords.network.CRPacketHandler;
-import derekahedron.customrecords.network.PlayGlobalSoundEffectButtonPacket;
+import derekahedron.customrecords.network.PlaySoundEffectButtonPacket;
 import derekahedron.customrecords.sound.CRSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
@@ -20,14 +20,14 @@ public class GlobalSoundEffectButtonBlock extends AbstractSoundEffectButton {
     @Override
     public void playSound(@Nullable Player player, Level level, BlockPos pos, SoundEvent soundEffect) {
         if (!level.isClientSide()) {
-            CRPacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new PlayGlobalSoundEffectButtonPacket(level.dimension(), pos, soundEffect));
+            CRPacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new PlaySoundEffectButtonPacket(level.dimension(), pos, soundEffect, true));
         }
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving && !state.is(newState.getBlock()) && !level.isClientSide()) {
-            CRPacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new PlayGlobalSoundEffectButtonPacket(level.dimension(), pos));
+            CRPacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new PlaySoundEffectButtonPacket(level.dimension(), pos, true));
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }

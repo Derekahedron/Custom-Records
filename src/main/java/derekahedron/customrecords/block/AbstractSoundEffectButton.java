@@ -2,6 +2,7 @@ package derekahedron.customrecords.block;
 
 import derekahedron.customrecords.block.entity.SoundEffectButtonBlockEntity;
 import derekahedron.customrecords.item.SoundEffectButtonItem;
+import derekahedron.customrecords.stats.CRStats;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -132,6 +133,10 @@ public abstract class AbstractSoundEffectButton extends DirectionalBlock impleme
         level.setBlock(pos, state, 3);
         if (level.getBlockEntity(pos) instanceof SoundEffectButtonBlockEntity blockEntity) {
             if (blockEntity.soundEffect != null) {
+                if (player != null) {
+                    player.awardStat(CRStats.PRESS_SOUND_EFFECT_BUTTON.get());
+                }
+
                 playSound(player, level, pos, blockEntity.soundEffect);
             } else {
                 level.playSound(

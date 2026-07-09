@@ -55,14 +55,17 @@ public class SoundEffectButtonBlock extends AbstractSoundEffectButton {
                     pos.getX(), pos.getY(), pos.getZ(),
                     64.0D,
                     level.dimension()
-            )), new PlaySoundEffectButtonPacket(pos, soundEffect));
+            )), new PlaySoundEffectButtonPacket(level.dimension(), pos, soundEffect, false));
         }
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!isMoving && !state.is(newState.getBlock()) && !level.isClientSide()) {
-            CRPacketHandler.INSTANCE.send(PacketDistributor.DIMENSION.with(level::dimension), new PlaySoundEffectButtonPacket(pos));
+            CRPacketHandler.INSTANCE.send(PacketDistributor.DIMENSION.with(level::dimension), new PlaySoundEffectButtonPacket(
+                    level.dimension(),
+                    pos,
+                    false));
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
