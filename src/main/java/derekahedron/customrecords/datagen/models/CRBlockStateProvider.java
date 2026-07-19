@@ -3,6 +3,7 @@ package derekahedron.customrecords.datagen.models;
 import derekahedron.customrecords.CustomRecords;
 import derekahedron.customrecords.block.CRBlocks;
 import derekahedron.customrecords.block.SoundEffectButtonBlock;
+import derekahedron.customrecords.client.render.CRItemModelOverrides;
 import derekahedron.customrecords.util.CRUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
@@ -27,107 +28,128 @@ public class CRBlockStateProvider extends BlockStateProvider {
         ModelFile soundEffectButtonBase = SoundEffectButtonBase(CRUtil.location("sound_effect_button_base"));
         ModelFile soundEffectButtonPressedBase = SoundEffectButtonPressedBase(CRUtil.location("sound_effect_button_pressed_base"));
         ModelFile soundEffectButtonInventoryBase = SoundEffectButtonInventoryBase(CRUtil.location("sound_effect_button_inventory_base"));
+        ModelFile soundEffectButtonInventoryPressedBase = SoundEffectButtonInventoryPressedBase(CRUtil.location("sound_effect_button_inventory_pressed_base"));
 
-        SoundEffectButton(CRBlocks.WHITE_SOUND_EFFECT_BUTTON.get(),
+        soundEffectButton(CRBlocks.WHITE_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.WHITE_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.ORANGE_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.ORANGE_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.ORANGE_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.MAGENTA_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.MAGENTA_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.MAGENTA_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.LIGHT_BLUE_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.LIGHT_BLUE_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.LIGHT_BLUE_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.YELLOW_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.YELLOW_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.YELLOW_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.LIME_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.LIME_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.LIME_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.PINK_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.PINK_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.PINK_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.GRAY_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.GRAY_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.GRAY_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.LIGHT_GRAY_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.LIGHT_GRAY_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.LIGHT_GRAY_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.PURPLE_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.PURPLE_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.PURPLE_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.CYAN_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.CYAN_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.CYAN_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.BLUE_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.BLUE_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.BLUE_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.BROWN_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.BROWN_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.BROWN_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.GREEN_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.GREEN_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.GREEN_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.RED_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.RED_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.RED_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
-        SoundEffectButton(CRBlocks.BLACK_SOUND_EFFECT_BUTTON.get(),
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
+        soundEffectButton(CRBlocks.BLACK_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.BLACK_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
 
-        SoundEffectButton(CRBlocks.BLANK_SOUND_EFFECT_BUTTON.get(),
+        soundEffectButton(CRBlocks.BLANK_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.BLANK_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
 
-        SoundEffectButton(CRBlocks.GLOBAL_SOUND_EFFECT_BUTTON.get(),
+        soundEffectButton(CRBlocks.GLOBAL_SOUND_EFFECT_BUTTON.get(),
                 CRBlocks.GLOBAL_SOUND_EFFECT_BUTTON.getId(),
                 soundEffectButtonBase,
                 soundEffectButtonPressedBase,
-                soundEffectButtonInventoryBase);
+                soundEffectButtonInventoryBase,
+                soundEffectButtonInventoryPressedBase);
     }
 
-    public void SoundEffectButton(Block block, ResourceLocation id, ModelFile base, ModelFile pressedBase, ModelFile inventoryBase) {
+    public void soundEffectButton(Block block, ResourceLocation id, ModelFile base, ModelFile pressedBase, ModelFile inventoryBase, ModelFile inventoryPressedBase) {
         ModelFile model = models().getBuilder(id.getPath()).parent(base)
                 .texture("texture", id.withPrefix("block/"));
         ModelFile pressedModel = models().getBuilder(id.withSuffix("_pressed").getPath()).parent(pressedBase)
                 .texture("texture", id.withPrefix("block/"));
         ModelFile inventoryModel = models().getBuilder(id.withSuffix("_inventory").getPath()).parent(inventoryBase)
+                .texture("texture", id.withPrefix("block/"));
+        ModelFile inventoryPressedModel = models().getBuilder(id.withSuffix("_inventory_pressed").getPath()).parent(inventoryPressedBase)
                 .texture("texture", id.withPrefix("block/"));
 
         getVariantBuilder(block)
@@ -168,7 +190,12 @@ public class CRBlockStateProvider extends BlockStateProvider {
                         new ConfiguredModel(pressedModel, 270, 90, false)
                 );
 
-        itemModels().getBuilder(id.getPath()).parent(inventoryModel);
+        itemModels().getBuilder(id.getPath())
+                .parent(inventoryModel)
+                .override()
+                .model(inventoryPressedModel)
+                .predicate(CRItemModelOverrides.PRESSED, 1.0F)
+                .end();
     }
 
     public BlockModelBuilder SoundEffectButtonBase(ResourceLocation id) {
@@ -187,7 +214,7 @@ public class CRBlockStateProvider extends BlockStateProvider {
                 .element()
                 .from(5, 2, 5)
                 .to(11, 4, 11)
-                .face(Direction.UP).texture("#texture").uvs(1, 1, 7, 7).end()
+                .face(Direction.UP).texture("#texture").uvs(9, 9, 15, 15).end()
                 .face(Direction.NORTH).texture("#texture").uvs(1, 12, 7, 14).end()
                 .face(Direction.SOUTH).texture("#texture").uvs(1, 12, 7, 14).end()
                 .face(Direction.EAST).texture("#texture").uvs(1, 12, 7, 14).end()
@@ -211,7 +238,7 @@ public class CRBlockStateProvider extends BlockStateProvider {
                 .element()
                 .from(5, 2, 5)
                 .to(11, 3, 11)
-                .face(Direction.UP).texture("#texture").uvs(1, 1, 7, 7).end()
+                .face(Direction.UP).texture("#texture").uvs(9, 9, 15, 15).end()
                 .face(Direction.NORTH).texture("#texture").uvs(1, 12, 7, 13).end()
                 .face(Direction.SOUTH).texture("#texture").uvs(1, 12, 7, 13).end()
                 .face(Direction.EAST).texture("#texture").uvs(1, 12, 7, 13).end()
@@ -234,11 +261,34 @@ public class CRBlockStateProvider extends BlockStateProvider {
                 .end().element()
                 .from(5, 8, 5)
                 .to(11, 10, 11)
-                .face(Direction.UP).texture("#texture").uvs(1, 1, 7, 7).end()
+                .face(Direction.UP).texture("#texture").uvs(9, 9, 15, 15).end()
                 .face(Direction.NORTH).texture("#texture").uvs(1, 12, 7, 14).end()
                 .face(Direction.SOUTH).texture("#texture").uvs(1, 12, 7, 14).end()
                 .face(Direction.EAST).texture("#texture").uvs(1, 12, 7, 14).end()
                 .face(Direction.WEST).texture("#texture").uvs(1, 12, 7, 14).end()
+                .end();
+    }
+
+    public BlockModelBuilder SoundEffectButtonInventoryPressedBase(ResourceLocation id) {
+        return models().withExistingParent(id.getPath(), ResourceLocation.tryParse("block/block"))
+                .texture("particle", "#texture")
+                .element()
+                .from(4, 6, 4)
+                .to(12, 8, 12)
+                .face(Direction.DOWN).cullface(Direction.DOWN).texture("#texture").uvs(8, 0, 16, 8).end()
+                .face(Direction.UP).texture("#texture").uvs(0, 0, 8, 8).end()
+                .face(Direction.NORTH).texture("#texture").uvs(0, 14, 8, 16).end()
+                .face(Direction.SOUTH).texture("#texture").uvs(0, 14, 8, 16).end()
+                .face(Direction.EAST).texture("#texture").uvs(0, 14, 8, 16).end()
+                .face(Direction.WEST).texture("#texture").uvs(0, 14, 8, 16).end()
+                .end().element()
+                .from(5, 8, 5)
+                .to(11, 9, 11)
+                .face(Direction.UP).texture("#texture").uvs(9, 9, 15, 15).end()
+                .face(Direction.NORTH).texture("#texture").uvs(1, 12, 7, 13).end()
+                .face(Direction.SOUTH).texture("#texture").uvs(1, 12, 7, 13).end()
+                .face(Direction.EAST).texture("#texture").uvs(1, 12, 7, 13).end()
+                .face(Direction.WEST).texture("#texture").uvs(1, 12, 7, 13).end()
                 .end();
     }
 }

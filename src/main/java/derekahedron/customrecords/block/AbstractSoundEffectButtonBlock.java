@@ -41,7 +41,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
-public abstract class AbstractSoundEffectButton extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
+public abstract class AbstractSoundEffectButtonBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
+
     public static final int TICKS_TO_STAY_PRESSED = 10;
     public static final BooleanProperty PRESSED = BooleanProperty.create("pressed");
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
@@ -85,7 +86,7 @@ public abstract class AbstractSoundEffectButton extends DirectionalBlock impleme
             Block.box(4.0F, 0.0F, 4.0F, 12.0F, 2.0F, 12.0F),
             Block.box(5.0F, 2.0F, 5.0F, 11.0F, 3.0F, 11.0F));
 
-    public AbstractSoundEffectButton(BlockBehaviour.Properties properties) {
+    public AbstractSoundEffectButtonBlock(BlockBehaviour.Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState()
                 .setValue(FACING, Direction.NORTH)
@@ -292,10 +293,10 @@ public abstract class AbstractSoundEffectButton extends DirectionalBlock impleme
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         if (stack.getItem() instanceof SoundEffectButtonItem item) {
-            ResourceLocation soundEffectId = item.getSoundEffectId(stack);
+            SoundEvent soundEffect = item.getSoundEffect(stack);
 
-            if (soundEffectId != null && level.getBlockEntity(pos) instanceof SoundEffectButtonBlockEntity blockEntity) {
-                blockEntity.soundEffect = SoundEvent.createVariableRangeEvent(soundEffectId);
+            if (soundEffect != null && level.getBlockEntity(pos) instanceof SoundEffectButtonBlockEntity blockEntity) {
+                blockEntity.soundEffect = soundEffect;
             }
         }
     }

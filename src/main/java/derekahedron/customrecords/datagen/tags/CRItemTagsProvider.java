@@ -7,6 +7,7 @@ import derekahedron.invexp.item.InvExpItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -76,5 +77,8 @@ public class CRItemTagsProvider extends ItemTagsProvider {
                 .add(CRItems.GREEN_SOUND_EFFECT_BUTTON.get())
                 .add(CRItems.RED_SOUND_EFFECT_BUTTON.get())
                 .add(CRItems.BLACK_SOUND_EFFECT_BUTTON.get());
+
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", "sound_effect_button")))
+                .addTag(CRItemTags.SOUND_EFFECT_BUTTONS);
     }
 }

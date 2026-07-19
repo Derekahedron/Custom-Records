@@ -163,9 +163,9 @@ public class CRItems {
                             new Item.Properties()
                                     .stacksTo(16)));
 
-    public static final RegistryObject<SoundEffectButtonItem> GLOBAL_SOUND_EFFECT_BUTTON =
+    public static final RegistryObject<GlobalSoundEffectButtonItem> GLOBAL_SOUND_EFFECT_BUTTON =
             ITEMS.register("global_sound_effect_button", () ->
-                    new SoundEffectButtonItem(
+                    new GlobalSoundEffectButtonItem(
                             CRBlocks.GLOBAL_SOUND_EFFECT_BUTTON.get(),
                             new Item.Properties()
                                     .stacksTo(1)

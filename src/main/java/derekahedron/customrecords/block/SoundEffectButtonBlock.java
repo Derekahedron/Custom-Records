@@ -18,7 +18,7 @@ import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 
-public class SoundEffectButtonBlock extends AbstractSoundEffectButton {
+public class SoundEffectButtonBlock extends AbstractSoundEffectButtonBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty POWERING = BooleanProperty.create("powering");
 

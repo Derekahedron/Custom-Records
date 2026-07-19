@@ -28,5 +28,7 @@
   "block.customrecords.blank_sound_effect_button": "Blank Sound Effect Button",
   "block.customrecords.global_sound_effect_button": "Global Sound Effect Button",
 
-  "stat.customrecords.press_sound_effect_button": "Sound Effect Buttons Pressed"
+  "stat.customrecords.press_sound_effect_button": "Sound Effect Buttons Pressed",
+
+  "curios.identifier.sound_effect_button": "Sound Effect Button"
 }

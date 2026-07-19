@@ -36,6 +36,26 @@ public class CRPacketHandler {
                     PlaySoundEffectButtonPacket::toBytes,
                     PlaySoundEffectButtonPacket::new,
                     PlaySoundEffectButtonPacket::handle);
+            INSTANCE.registerMessage(getId(),
+                    PlaySoundEffectButtonInventoryPacket.class,
+                    PlaySoundEffectButtonInventoryPacket::toBytes,
+                    PlaySoundEffectButtonInventoryPacket::new,
+                    PlaySoundEffectButtonInventoryPacket::handle);
+            INSTANCE.registerMessage(getId(),
+                    PressSoundEffectButtonInInventoryPacket.class,
+                    PressSoundEffectButtonInInventoryPacket::toBytes,
+                    PressSoundEffectButtonInInventoryPacket::new,
+                    PressSoundEffectButtonInInventoryPacket::handle);
+            INSTANCE.registerMessage(getId(),
+                    UpdatePressedSoundEffectButtonPacket.class,
+                    UpdatePressedSoundEffectButtonPacket::toBytes,
+                    UpdatePressedSoundEffectButtonPacket::new,
+                    UpdatePressedSoundEffectButtonPacket::handle);
+            INSTANCE.registerMessage(getId(),
+                    TrackPressedSoundEffectButtonPacket.class,
+                    TrackPressedSoundEffectButtonPacket::toBytes,
+                    TrackPressedSoundEffectButtonPacket::new,
+                    TrackPressedSoundEffectButtonPacket::handle);
         });
     }
 }

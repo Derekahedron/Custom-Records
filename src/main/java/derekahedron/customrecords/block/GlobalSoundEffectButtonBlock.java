@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
-public class GlobalSoundEffectButtonBlock extends AbstractSoundEffectButton {
+public class GlobalSoundEffectButtonBlock extends AbstractSoundEffectButtonBlock {
 
     public GlobalSoundEffectButtonBlock(Properties properties) {
         super(properties);

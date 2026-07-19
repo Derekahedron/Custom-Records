@@ -1,3 +1,11 @@
 {
-  "parent": "customrecords:block/green_sound_effect_button_inventory"
+  "parent": "customrecords:block/green_sound_effect_button_inventory",
+  "overrides": [
+    {
+      "model": "customrecords:block/green_sound_effect_button_inventory_pressed",
+      "predicate": {
+        "customrecords:pressed": 1.0
+      }
+    }
+  ]
 }

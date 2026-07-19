@@ -4,10 +4,13 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import derekahedron.customrecords.CustomRecords;
+import derekahedron.customrecords.client.util.ClientPressedSoundEffectButtonsManager;
 import derekahedron.customrecords.client.util.ClientProxy;
+import derekahedron.customrecords.util.slotreference.SlotReference;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.fml.DistExecutor;
@@ -38,6 +41,20 @@ public class CRUtil {
         return DistExecutor.unsafeRunForDist(
                 () -> ClientProxy::getClientRegistryAccess,
                 () -> () -> ServerLifecycleHooks.getCurrentServer().registryAccess()
+        );
+    }
+
+    /**
+     * Gets if a button in a players inventory is currently being pressed.
+     *
+     * @param player the player to check the inventory of
+     * @param slotReference the reference to the slot to check
+     * @return <code>true</code> if a button in the given slot of the given player is being pressed; <code>false</code> otherwise
+     */
+    public static boolean isButtonPressed(Player player, SlotReference slotReference) {
+        return DistExecutor.unsafeRunForDist(
+                () -> () -> ClientPressedSoundEffectButtonsManager.isPressed(player, slotReference),
+                () -> () -> PressedSoundEffectButtonsManager.isPressed(player, slotReference)
         );
     }
 
