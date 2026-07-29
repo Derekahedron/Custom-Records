@@ -3,6 +3,7 @@ package derekahedron.customrecords.util;
 import java.util.Optional;
 import java.util.function.Function;
 
+@SuppressWarnings("unused")
 public record Tuple<A, B>(A a, B b) {
 
     public <T, U> Tuple<T, U> map(

@@ -1,7 +1,6 @@
 package derekahedron.customrecords.inventory;
 
 import derekahedron.customrecords.CustomRecords;
-import derekahedron.customrecords.util.slotreference.SlotReference;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
