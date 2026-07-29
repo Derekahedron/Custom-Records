@@ -28,23 +28,8 @@
   "block.customrecords.green_sound_effect_button": "Green Sound Effect Button",
   "block.customrecords.red_sound_effect_button": "Red Sound Effect Button",
   "block.customrecords.black_sound_effect_button": "Black Sound Effect Button",
-  "block.customrecords.death_sound_effect_action_button": "Sound Effect Action Button",
-  "block.customrecords.kill_sound_effect_action_button": "Sound Effect Action Button",
-  "block.customrecords.eat_sound_effect_action_button": "Sound Effect Action Button",
-  "block.customrecords.long_fall_sound_effect_action_button": "Sound Effect Action Button",
-  "block.customrecords.login_sound_effect_action_button": "Sound Effect Action Button",
-  "block.customrecords.logout_sound_effect_action_button": "Sound Effect Action Button",
-  "block.customrecords.random_sound_effect_action_button": "Sound Effect Action Button",
   "block.customrecords.blank_sound_effect_button": "Blank Sound Effect Button",
   "block.customrecords.global_sound_effect_button": "Global Sound Effect Button",
-
-  "sound_effect_action_type.customrecords.death": "Death",
-  "sound_effect_action_type.customrecords.kill": "Kill",
-  "sound_effect_action_type.customrecords.eat": "Eat",
-  "sound_effect_action_type.customrecords.long_fall": "Long Fall",
-  "sound_effect_action_type.customrecords.login": "Login",
-  "sound_effect_action_type.customrecords.logout": "Logout",
-  "sound_effect_action_type.customrecords.random": "Random",
 
   "stat.customrecords.press_sound_effect_button": "Sound Effect Buttons Pressed",
 
