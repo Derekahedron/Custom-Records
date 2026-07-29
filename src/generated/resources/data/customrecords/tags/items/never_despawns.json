@@ -1,6 +1,7 @@
 {
   "values": [
     "customrecords:golden_record",
-    "customrecords:global_sound_effect_button"
+    "customrecords:global_sound_effect_button",
+    "customrecords:global_sound_board"
   ]
 }

@@ -63,31 +63,20 @@ public class SlotReferenceEvent {
 
     public static Optional<SlotReference> getSlotReference(Player player, ItemStack stack) {
         return getSlotReferences(player)
-                .filter(slotReference -> slotReference.getStack(player)
+                .filter(slotReference -> slotReference.getStackForPlayer(player)
                         .map(slotStack -> slotStack == stack)
                         .orElse(false))
                 .findFirst();
     }
 
     public static Stream<SlotReference> getSlotReferences(Player player) {
-        Stream<SlotReference> slotReferences = Stream.concat(
+        return expandSlotReferences(getInventorySlotReferences(player), player);
+    }
+
+    public static Stream<SlotReference> getInventorySlotReferences(Player player) {
+        return Stream.concat(
                 getEventSlotReferences(player),
                 getVanillaSlotReferences(player));
-
-        return slotReferences.flatMap(slotReference -> {
-            ItemStack stack = slotReference.getStack(player).orElse(ItemStack.EMPTY);
-            if (stack.isEmpty()) return Stream.empty();
-
-            ExpandSlotReference event = new ExpandSlotReference(player, slotReference, stack);
-
-            CustomRecords.EVENT_BUS.post(event);
-
-            return Stream.concat(
-                    Stream.of(slotReference),
-                    event.slotReferences.stream()
-                            .flatMap(Function.identity())
-            );
-        });
     }
 
     private static Stream<SlotReference> getEventSlotReferences(Player player) {
@@ -103,5 +92,26 @@ public class SlotReferenceEvent {
         return IntStream.range(0, player.inventoryMenu.slots.size())
                 .filter(i -> !player.inventoryMenu.slots.get(i).getItem().isEmpty())
                 .mapToObj(i -> new VanillaSlotReference(0, i));
+    }
+
+    public static Stream<SlotReference> expandSlotReferences(Stream<SlotReference> slotReferences, Player player) {
+        return expandSlotReferences(slotReferences, player, 0);
+    }
+
+    private static Stream<SlotReference> expandSlotReferences(Stream<SlotReference> slotReferences, Player player, int expansion) {
+        if (expansion > 64) return slotReferences;
+
+        return slotReferences.flatMap(slotReference -> {
+            ItemStack stack = slotReference.getStackForPlayer(player).orElse(ItemStack.EMPTY);
+            if (stack.isEmpty()) return Stream.empty();
+
+            ExpandSlotReference event = new ExpandSlotReference(player, slotReference, stack);
+
+            CustomRecords.EVENT_BUS.post(event);
+
+            return Stream.concat(
+                    Stream.of(slotReference),
+                    expandSlotReferences(event.slotReferences.stream().flatMap(Function.identity()), player, expansion + 1));
+        });
     }
 }

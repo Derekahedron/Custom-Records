@@ -56,9 +56,7 @@ public class CRRecipeProvider extends RecipeProvider {
 
         new CopySoundEffectButtonRecipe.Builder(RecipeCategory.MISC,
                 CRItems.BLANK_SOUND_EFFECT_BUTTON.get(),
-                CompoundIngredient.of(
-                        Ingredient.of(CRItemTags.DYEABLE_SOUND_EFFECT_BUTTONS),
-                        Ingredient.of(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get())),
+                Ingredient.of(CRItemTags.COPYABLE_SOUND_EFFECT_BUTTONS),
                 Ingredient.of(CRItems.BLANK_SOUND_EFFECT_BUTTON.get()))
                 .save(consumer, CRUtil.location("copy_blank_sound_effect_button"));
     }

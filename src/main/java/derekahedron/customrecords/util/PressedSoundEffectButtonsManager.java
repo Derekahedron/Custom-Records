@@ -31,7 +31,7 @@ public class PressedSoundEffectButtonsManager {
                 if (newTicks <= 0) {
                     slotIterator.remove();
 
-                    ItemStack stack = slotReference.getStack(player).orElse(null);
+                    ItemStack stack = slotReference.getStackForPlayer(player).orElse(null);
                     if (stack != null && stack.getItem() instanceof SoundEffectButtonItem item) {
                         item.onInventoryUnpress(stack, player, slotReference);
                     }

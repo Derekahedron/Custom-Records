@@ -82,10 +82,12 @@ public class CRItemModelOverrides {
                     (stack, level, entity, id) ->
                             entity instanceof Player player && ClientPressedSoundEffectButtonsManager.isPressed(player, stack)
                                     ? 1.0F : 0.0F);
+
             ItemProperties.register(CRItems.BLANK_SOUND_EFFECT_BUTTON.get(), PRESSED,
                     (stack, level, entity, id) ->
                             entity instanceof Player player && ClientPressedSoundEffectButtonsManager.isPressed(player, stack)
                                     ? 1.0F : 0.0F);
+
             ItemProperties.register(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get(), PRESSED,
                     (stack, level, entity, id) ->
                             entity instanceof Player player && ClientPressedSoundEffectButtonsManager.isPressed(player, stack)

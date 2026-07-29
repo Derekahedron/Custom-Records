@@ -3,14 +3,9 @@
   "blank_button": {
     "item": "customrecords:blank_sound_effect_button"
   },
-  "button": [
-    {
-      "tag": "customrecords:dyeable_sound_effect_buttons"
-    },
-    {
-      "item": "customrecords:global_sound_effect_button"
-    }
-  ],
+  "button": {
+    "tag": "customrecords:copyable_sound_effect_buttons"
+  },
   "category": "misc",
   "result": {
     "item": "customrecords:blank_sound_effect_button"

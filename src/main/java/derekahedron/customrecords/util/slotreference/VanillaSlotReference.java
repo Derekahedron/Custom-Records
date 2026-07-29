@@ -9,7 +9,7 @@ import java.util.Optional;
 public record VanillaSlotReference(int containerId, int slotIndex) implements SlotReference {
 
     @Override
-    public Optional<ItemStack> getStack(Player player) {
+    public Optional<ItemStack> getStackForPlayer(Player player) {
         if (slotIndex < 0) {
             return Optional.empty();
         } else if (containerId == 0) {

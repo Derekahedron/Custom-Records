@@ -9,7 +9,7 @@ import java.util.Optional;
 public class EmptySlotReference implements SlotReference {
 
     @Override
-    public Optional<ItemStack> getStack(Player player) {
+    public Optional<ItemStack> getStackForPlayer(Player player) {
         return Optional.empty();
     }
 

@@ -1,6 +1,8 @@
-// 1.20.1	2026-06-19T14:23:35.2965297	Item Models: customrecords
+// 1.20.1	2026-07-20T00:53:14.9381135	Item Models: customrecords
 f5dbedb4e3ee805db98c8d0eca2314675420ecb4 assets/customrecords/models/item/blank_silver_record.json
 d94c44e0b323758bc0101b175147123181915bf6 assets/customrecords/models/item/custom_music_disc.json
 0e04ceca656f30bbd7b4e908c17d3388426de731 assets/customrecords/models/item/custom_music_disc_fragment.json
+4703aefa810fb362bb6c496dd2a7c65429518697 assets/customrecords/models/item/global_sound_board.json
 aea63c407f643c35441eec8241e70f7d3fd42680 assets/customrecords/models/item/golden_record.json
 bad2311ecab7b4214f7bc01cd5cff7ca5d950441 assets/customrecords/models/item/silver_record.json
+41259855e3118f4beaccf9cb757d5142ff63b49e assets/customrecords/models/item/sound_board.json

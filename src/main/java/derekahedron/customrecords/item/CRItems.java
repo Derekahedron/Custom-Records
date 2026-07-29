@@ -171,4 +171,18 @@ public class CRItems {
                                     .stacksTo(1)
                                     .fireResistant()
                                     .rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<SoundBoardItem> SOUND_BOARD =
+            ITEMS.register("sound_board", () ->
+                    new SoundBoardItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<SoundBoardItem> GLOBAL_SOUND_BOARD =
+            ITEMS.register("global_sound_board", () ->
+                    new SoundBoardItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .fireResistant()
+                                    .rarity(Rarity.EPIC)));
 }

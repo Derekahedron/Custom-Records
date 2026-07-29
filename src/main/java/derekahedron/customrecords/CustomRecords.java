@@ -5,6 +5,7 @@ import derekahedron.customrecords.block.entity.CRBlockEntityTypes;
 import derekahedron.customrecords.client.CustomRecordsClient;
 import derekahedron.customrecords.compat.curios.CuriosCompat;
 import derekahedron.customrecords.compat.sophisticatedcore.SophisticatedCompat;
+import derekahedron.customrecords.inventory.CRMenuTypes;
 import derekahedron.customrecords.item.CRCreativeTabs;
 import derekahedron.customrecords.item.CRItems;
 import derekahedron.customrecords.item.SoundEffectPredicate;
@@ -47,6 +48,7 @@ public class CustomRecords {
         CRLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
         CRSoundEvents.SOUND_EVENTS.register(modEventBus);
         CRStats.CUSTOM_STATS.register(modEventBus);
+        CRMenuTypes.MENU_TYPES.register(modEventBus);
         SlotReferenceSerializers.SLOT_REFERENCE_SERIALIZERS.register(modEventBus);
 
         modEventBus.addListener(CRPacketHandler::initialize);

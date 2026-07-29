@@ -49,11 +49,13 @@ public class CRItemTagsProvider extends ItemTagsProvider {
 
         tag(CRItemTags.IMMUNE_TO_DAMAGE)
                 .add(CRItems.GOLDEN_RECORD.get())
-                .add(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get());
+                .add(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get())
+                .add(CRItems.GLOBAL_SOUND_BOARD.get());
 
         tag(CRItemTags.NEVER_DESPAWNS)
                 .add(CRItems.GOLDEN_RECORD.get())
-                .add(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get());
+                .add(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get())
+                .add(CRItems.GLOBAL_SOUND_BOARD.get());
 
         tag(CRItemTags.SOUND_EFFECT_BUTTONS)
                 .addTag(CRItemTags.DYEABLE_SOUND_EFFECT_BUTTONS)
@@ -78,7 +80,18 @@ public class CRItemTagsProvider extends ItemTagsProvider {
                 .add(CRItems.RED_SOUND_EFFECT_BUTTON.get())
                 .add(CRItems.BLACK_SOUND_EFFECT_BUTTON.get());
 
-        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", "sound_effect_button")))
-                .addTag(CRItemTags.SOUND_EFFECT_BUTTONS);
+        tag(CRItemTags.COPYABLE_SOUND_EFFECT_BUTTONS)
+                .addTag(CRItemTags.DYEABLE_SOUND_EFFECT_BUTTONS)
+                .add(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get());
+
+        tag(CRItemTags.SOUND_BOARDS)
+                .add(CRItems.SOUND_BOARD.get())
+                .add(CRItems.GLOBAL_SOUND_BOARD.get());
+
+        tag(CRItemTags.GLOBAL_SOUND_BOARDS)
+                .add(CRItems.GLOBAL_SOUND_BOARD.get());
+
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", "sound_board")))
+                .addTag(CRItemTags.SOUND_BOARDS);
     }
 }

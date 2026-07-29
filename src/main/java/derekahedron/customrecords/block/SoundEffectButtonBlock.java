@@ -48,6 +48,7 @@ public class SoundEffectButtonBlock extends AbstractSoundEffectButtonBlock {
         super.unpress(state, level, pos);
     }
 
+    @Override
     public void playSound(@Nullable Player player, Level level, BlockPos pos, SoundEvent soundEffect) {
         if (!level.isClientSide()) {
             CRPacketHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(

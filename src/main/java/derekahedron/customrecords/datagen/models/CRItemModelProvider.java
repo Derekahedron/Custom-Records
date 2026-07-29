@@ -19,5 +19,7 @@ public class CRItemModelProvider extends ItemModelProvider {
         basicItem(CRItems.GOLDEN_RECORD.get());
         basicItem(CRItems.CUSTOM_MUSIC_DISC_FRAGMENT.get());
         basicItem(CRItems.CUSTOM_MUSIC_DISC.get());
+        basicItem(CRItems.SOUND_BOARD.get());
+        basicItem(CRItems.GLOBAL_SOUND_BOARD.get());
     }
 }

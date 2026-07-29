@@ -18,4 +18,13 @@ public class CRItemTags {
 
     public static final TagKey<Item> DYEABLE_SOUND_EFFECT_BUTTONS =
             ItemTags.create(CRUtil.location("dyeable_sound_effect_buttons"));
+
+    public static final TagKey<Item> COPYABLE_SOUND_EFFECT_BUTTONS =
+            ItemTags.create(CRUtil.location("copyable_sound_effect_buttons"));
+
+    public static final TagKey<Item> SOUND_BOARDS =
+            ItemTags.create(CRUtil.location("sound_boards"));
+
+    public static final TagKey<Item> GLOBAL_SOUND_BOARDS =
+            ItemTags.create(CRUtil.location("global_sound_boards"));
 }

@@ -21,7 +21,7 @@ public class ClientPressedSoundEffectButtonsManager {
         if (!PRESSED_BUTTONS.containsKey(player)) return false;
 
         for (SlotReference slotReference : PRESSED_BUTTONS.get(player)) {
-            if (stack == slotReference.getStack(player).orElse(null)) {
+            if (stack == slotReference.getStackForPlayer(player).orElse(null)) {
                 return true;
             }
         }

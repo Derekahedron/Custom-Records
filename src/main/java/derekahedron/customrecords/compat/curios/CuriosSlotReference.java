@@ -4,7 +4,6 @@ import derekahedron.customrecords.util.slotreference.SlotReference;
 import derekahedron.customrecords.util.slotreference.SlotReferenceEvent;
 import derekahedron.customrecords.util.slotreference.SlotReferenceSerializer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -19,7 +18,7 @@ import java.util.stream.IntStream;
 public record CuriosSlotReference(String identifier, int index) implements SlotReference {
 
     @Override
-    public Optional<ItemStack> getStack(Player player) {
+    public Optional<ItemStack> getStackForPlayer(Player player) {
         return CuriosApi.getCuriosInventory(player).resolve()
                 .flatMap(inv -> inv.findCurio(identifier, index))
                 .map(SlotResult::stack);

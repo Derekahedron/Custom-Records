@@ -1,8 +1,12 @@
-// 1.20.1	2026-07-18T18:41:39.4988697	Custom Records Item Tags
+// 1.20.1	2026-07-28T20:34:23.6698779	Custom Records Item Tags
+51377be2e195176d6633c1299349e472286c1a97 data/curios/tags/items/sound_board.json
 977710f552dfe7831983545a35d5a5f25e1af1c7 data/curios/tags/items/sound_effect_button.json
+7704a97101fa87ec161a1194b01a6b4c26f8540c data/customrecords/tags/items/copyable_sound_effect_buttons.json
 72d277a70dc120317a898c36459653b1a3af75b3 data/customrecords/tags/items/dyeable_sound_effect_buttons.json
-50030974d60180ae22dfb806f6bd515647b8d804 data/customrecords/tags/items/immune_to_damage.json
-50030974d60180ae22dfb806f6bd515647b8d804 data/customrecords/tags/items/never_despawns.json
+e49810ab521783101dbdde7a9eb512174a3e250d data/customrecords/tags/items/global_sound_boards.json
+ed66bd06a0a15cea7baa66af81d75a243de37371 data/customrecords/tags/items/immune_to_damage.json
+ed66bd06a0a15cea7baa66af81d75a243de37371 data/customrecords/tags/items/never_despawns.json
+ff693da441c72779721abc0bf242ea098a488d3c data/customrecords/tags/items/sound_boards.json
 d18157a5d811f7f8458817cd45abfe58f7391e35 data/customrecords/tags/items/sound_effect_buttons.json
 977710f552dfe7831983545a35d5a5f25e1af1c7 data/invexp/tags/items/sack_type/button.json
 48f3baf5ff022f81fe3740b1dde79cf863c5a07c data/invexp/tags/items/sack_type/music_disc.json

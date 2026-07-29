@@ -3,9 +3,9 @@ package derekahedron.customrecords.block;
 import derekahedron.customrecords.sound.CRSoundEvents;
 import net.minecraft.sounds.SoundEvent;
 
-public class BlankSoundEffectButtonBlock extends SoundEffectButtonBlock {
+public class MetalSoundEffectButtonBlock extends SoundEffectButtonBlock {
 
-    public BlankSoundEffectButtonBlock(Properties properties) {
+    public MetalSoundEffectButtonBlock(Properties properties) {
         super(properties);
     }
 

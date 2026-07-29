@@ -15,13 +15,14 @@ public class InventoryCallbacksManager {
 
     private static final HashMap<UUID, HashMap<SlotReference, ArrayList<Callback>>> CALLBACKS = new HashMap<>();
 
-    public static void addCallback(Player player, SlotReference slotReference, Callback callback) {
-        ItemStack stack = slotReference.getStack(player).orElse(null);
-        if (stack == null) return;
+    public static boolean addCallback(Callback callback) {
+        if (callback.stack.isEmpty()) return false;
 
-        CALLBACKS.computeIfAbsent(player.getUUID(), k -> new HashMap<>())
-                .computeIfAbsent(slotReference, k -> new ArrayList<>())
+        CALLBACKS.computeIfAbsent(callback.playerId, k -> new HashMap<>())
+                .computeIfAbsent(callback.slotReference, k -> new ArrayList<>())
                 .add(callback);
+
+        return true;
     }
 
     public static void tick(MinecraftServer server) {
@@ -68,9 +69,11 @@ public class InventoryCallbacksManager {
 
             while (callbackIterator.hasNext()) {
                 var callback = callbackIterator.next();
-                ItemStack otherStack = slotReference.getStack(player).orElse(null);
+                ItemStack otherStack = slotReference.getStackForPlayer(player).orElse(null);
 
-                if (otherStack == null || !callback.matches(otherStack)) {
+                if (otherStack == null
+                        || !callback.matches(otherStack)
+                        || callback.stack.isEmpty()) {
                     callback.onChange(player);
                     callbackIterator.remove();
                 }
@@ -84,13 +87,15 @@ public class InventoryCallbacksManager {
 
     public abstract static class Callback {
 
+        public final UUID playerId;
         public final SlotReference slotReference;
         public final ItemStack stack;
         protected final ItemStack copy;
 
-        public Callback(SlotReference slotReference, ItemStack stack) {
+        public Callback(Player player, SlotReference slotReference) {
+            this.playerId = player.getUUID();
             this.slotReference = slotReference;
-            this.stack = stack;
+            this.stack = slotReference.getStackForPlayer(player).orElse(ItemStack.EMPTY);
             this.copy = stack.copy();
         }
 

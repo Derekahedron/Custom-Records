@@ -11,10 +11,16 @@ import java.util.stream.IntStream;
 public record NestedSlotReference(SlotReference slotReference, int slotIndex) implements SlotReference {
 
     @Override
-    public Optional<ItemStack> getStack(Player player) {
-        return slotReference.getStack(player)
+    public Optional<ItemStack> getStackForPlayer(Player player) {
+        return slotReference.getStackForPlayer(player)
+                .filter(stack -> !stack.isEmpty())
                 .flatMap(stack -> stack.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve())
                 .map(handler -> handler.getStackInSlot(slotIndex));
+    }
+
+    @Override
+    public Optional<SlotReference> getHoldingSlotReference() {
+        return Optional.of(slotReference);
     }
 
     @Override

@@ -82,9 +82,9 @@ public class CRBlocks {
                     new SoundEffectButtonBlock(
                             BlockBehaviour.Properties.copy(WHITE_SOUND_EFFECT_BUTTON.get())));
 
-    public static final RegistryObject<BlankSoundEffectButtonBlock> BLANK_SOUND_EFFECT_BUTTON =
+    public static final RegistryObject<MetalSoundEffectButtonBlock> BLANK_SOUND_EFFECT_BUTTON =
             BLOCKS.register("blank_sound_effect_button", () ->
-                    new BlankSoundEffectButtonBlock(
+                    new MetalSoundEffectButtonBlock(
                             BlockBehaviour.Properties.copy(WHITE_SOUND_EFFECT_BUTTON.get())
                                     .sound(SoundType.METAL)));
 
