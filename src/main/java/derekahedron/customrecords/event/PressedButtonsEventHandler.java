@@ -2,13 +2,14 @@ package derekahedron.customrecords.event;
 
 import derekahedron.customrecords.CustomRecords;
 import derekahedron.customrecords.network.CRPacketHandler;
-import derekahedron.customrecords.network.TrackPressedSoundEffectButtonPacket;
+import derekahedron.customrecords.network.UpdateTrackedPressedButtonsPacket;
 import derekahedron.customrecords.util.PressedSoundEffectButtonsManager;
-import derekahedron.customrecords.util.slotreference.SlotReference;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -20,20 +21,26 @@ import java.util.*;
 public class PressedButtonsEventHandler {
 
     @SubscribeEvent
+    public static void clearPressed(ServerAboutToStartEvent event) {
+        PressedSoundEffectButtonsManager.clear();
+    }
+
+    @SubscribeEvent
     public static void tickPressed(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.START || event.side != LogicalSide.SERVER) return;
-        PressedSoundEffectButtonsManager.tick();
+        PressedSoundEffectButtonsManager.tick(event.getServer());
     }
 
     @SubscribeEvent
     public static void trackPressed(PlayerEvent.StartTracking event) {
         if (!(event.getTarget() instanceof Player tracked)
                 || !(event.getEntity() instanceof ServerPlayer player)) return;
-        List<SlotReference> pressedSlots = PressedSoundEffectButtonsManager.getPressedSlotReferences(tracked);
+        Collection<EquipmentSlot> pressedSlots = PressedSoundEffectButtonsManager.getPressedEquipmentSlots(tracked);
 
         if (pressedSlots.isEmpty()) return;
-        CRPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
-                new TrackPressedSoundEffectButtonPacket(
+        CRPacketHandler.INSTANCE.send(
+                PacketDistributor.PLAYER.with(() -> player),
+                new UpdateTrackedPressedButtonsPacket(
                         tracked.getUUID(),
                         pressedSlots));
     }
@@ -43,9 +50,10 @@ public class PressedButtonsEventHandler {
         if (!(event.getTarget() instanceof Player tracked)
                 || !(event.getEntity() instanceof ServerPlayer player)) return;
 
-        CRPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player),
-                new TrackPressedSoundEffectButtonPacket(
+        CRPacketHandler.INSTANCE.send(
+                PacketDistributor.PLAYER.with(() -> player),
+                new UpdateTrackedPressedButtonsPacket(
                         tracked.getUUID(),
-                        List.of()));
+                        Collections.emptySet()));
     }
 }

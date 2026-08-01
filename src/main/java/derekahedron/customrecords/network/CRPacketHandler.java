@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class CRPacketHandler {
-    private static final String PROTOCOL_VERSION = "1";
+    private static final String PROTOCOL_VERSION = "2";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             CRUtil.location("main"),
             () -> PROTOCOL_VERSION,
@@ -61,34 +61,46 @@ public class CRPacketHandler {
                     PressSoundEffectButtonInInventoryPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_SERVER));
             INSTANCE.registerMessage(getId(),
-                    UpdatePressedSoundEffectButtonPacket.class,
-                    UpdatePressedSoundEffectButtonPacket::toBytes,
-                    UpdatePressedSoundEffectButtonPacket::new,
-                    UpdatePressedSoundEffectButtonPacket::handle,
-                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-            INSTANCE.registerMessage(getId(),
-                    TrackPressedSoundEffectButtonPacket.class,
-                    TrackPressedSoundEffectButtonPacket::toBytes,
-                    TrackPressedSoundEffectButtonPacket::new,
-                    TrackPressedSoundEffectButtonPacket::handle,
-                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-            INSTANCE.registerMessage(getId(),
                     OpenSoundBoardPacket.class,
                     OpenSoundBoardPacket::toBytes,
                     OpenSoundBoardPacket::new,
                     OpenSoundBoardPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_SERVER));
+            INSTANCE.registerMessage(getId(),
+                    UpdateTrackedPressedButtonsPacket.class,
+                    UpdateTrackedPressedButtonsPacket::toBytes,
+                    UpdateTrackedPressedButtonsPacket::new,
+                    UpdateTrackedPressedButtonsPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+            INSTANCE.registerMessage(getId(),
+                    UpdatePressedButtonPacket.class,
+                    UpdatePressedButtonPacket::toBytes,
+                    UpdatePressedButtonPacket::new,
+                    UpdatePressedButtonPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         });
     }
 
     public static final PacketDistributor<ServerPlayer> ALL_BUT_PLAYER =
             new PacketDistributor<>(CRPacketHandler::playerListAll, NetworkDirection.PLAY_TO_CLIENT);
+    public static final PacketDistributor<ServerPlayer> DIMENSION_EXCEPT_PLAYER =
+            new PacketDistributor<>(CRPacketHandler::playerListDimConsumer, NetworkDirection.PLAY_TO_CLIENT);
 
     private static Consumer<Packet<?>> playerListAll(PacketDistributor<?> distributor, final Supplier<ServerPlayer> voidSupplier) {
         return p -> {
             ServerPlayer excludedPlayer = voidSupplier.get();
             ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(player -> {
                 if (excludedPlayer != player) {
+                    player.connection.send(p);
+                }
+            });
+        };
+    }
+    private static Consumer<Packet<?>> playerListDimConsumer(PacketDistributor<?> distributor, final Supplier<ServerPlayer> voidSupplier) {
+        return p -> {
+            ServerPlayer excludedPlayer = voidSupplier.get();
+            ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(player -> {
+                if (excludedPlayer != player && excludedPlayer.level().dimension() == player.level().dimension()) {
                     player.connection.send(p);
                 }
             });

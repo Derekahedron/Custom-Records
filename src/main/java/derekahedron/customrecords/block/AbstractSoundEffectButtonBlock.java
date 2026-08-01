@@ -44,6 +44,7 @@ import javax.annotation.Nullable;
 public abstract class AbstractSoundEffectButtonBlock extends DirectionalBlock implements EntityBlock, SimpleWaterloggedBlock {
 
     public static final int TICKS_TO_STAY_PRESSED = 10;
+    public static final double SOUND_EVENT_RADIUS = 64.0D;
     public static final BooleanProperty PRESSED = BooleanProperty.create("pressed");
     public static final DirectionProperty FACING = DirectionalBlock.FACING;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;

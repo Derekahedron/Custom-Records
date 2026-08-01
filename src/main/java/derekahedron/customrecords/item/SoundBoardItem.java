@@ -3,6 +3,7 @@ package derekahedron.customrecords.item;
 import derekahedron.customrecords.inventory.SoundBoardMenu;
 import derekahedron.customrecords.network.CRPacketHandler;
 import derekahedron.customrecords.network.OpenSoundBoardPacket;
+import derekahedron.customrecords.util.CRUtil;
 import derekahedron.customrecords.util.slotreference.SlotReference;
 import derekahedron.customrecords.util.slotreference.SlotReferenceEvent;
 import net.minecraft.ChatFormatting;
@@ -61,8 +62,10 @@ public class SoundBoardItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        SlotReference slotReference = SlotReferenceEvent.getSlotReference(player, stack).orElse(null);
-        if (slotReference == null) return InteractionResultHolder.pass(stack);
+        SlotReference slotReference = CRUtil.getSlotReference(player, hand);
+        if (stack != slotReference.getStackForPlayer(player).orElse(null)) {
+            return InteractionResultHolder.fail(stack);
+        }
 
         SoundBoardItemHandler handler = slotReference.getStackForPlayer(player)
                 .flatMap(this::getHandler)

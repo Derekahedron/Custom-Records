@@ -1,5 +1,7 @@
 package derekahedron.customrecords.util;
 
+import net.minecraft.network.FriendlyByteBuf;
+
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -50,5 +52,22 @@ public record Tuple<A, B>(A a, B b) {
     public <U> Optional<Tuple<A, U>> mapOptionalB(
             Function<? super B, ? extends Optional<U>> mapper) {
         return mapper.apply(b).map(u -> new Tuple<>(a, u));
+    }
+
+    public static <A, B> FriendlyByteBuf.Reader<Tuple<A, B>> reader(
+            FriendlyByteBuf.Reader<A> readerA,
+            FriendlyByteBuf.Reader<B> readerB) {
+        return buffer -> new Tuple<>(
+                readerA.apply(buffer),
+                readerB.apply(buffer));
+    }
+
+    public static <A, B> FriendlyByteBuf.Writer<Tuple<A, B>> writer(
+            FriendlyByteBuf.Writer<A> writerA,
+            FriendlyByteBuf.Writer<B> writerB) {
+        return (buffer, tuple) -> {
+            writerA.accept(buffer, tuple.a);
+            writerB.accept(buffer, tuple.b);
+        };
     }
 }

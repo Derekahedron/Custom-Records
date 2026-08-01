@@ -30,7 +30,7 @@ public record PressSoundEffectButtonInInventoryPacket(SlotReference slotReferenc
             if (stack == null) return;
             if (!(stack.getItem() instanceof SoundEffectButtonItem item)) return;
 
-            item.onInventoryPress(stack, player, slotReference);
+            item.onInventoryPress(stack, player, slotReference, false);
         });
         context.get().setPacketHandled(true);
     }
