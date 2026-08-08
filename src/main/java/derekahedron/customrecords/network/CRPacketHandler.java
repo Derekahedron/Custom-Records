@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class CRPacketHandler {
-    private static final String PROTOCOL_VERSION = "2";
+    private static final String PROTOCOL_VERSION = "3";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             CRUtil.location("main"),
             () -> PROTOCOL_VERSION,
@@ -43,16 +43,16 @@ public class CRPacketHandler {
                     PlaySophisticatedCustomRecordPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_CLIENT));
             INSTANCE.registerMessage(getId(),
-                    PlaySoundEffectButtonPacket.class,
-                    PlaySoundEffectButtonPacket::toBytes,
-                    PlaySoundEffectButtonPacket::new,
-                    PlaySoundEffectButtonPacket::handle,
+                    StartSoundEffectPacket.class,
+                    StartSoundEffectPacket::toBytes,
+                    StartSoundEffectPacket::new,
+                    StartSoundEffectPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_CLIENT));
             INSTANCE.registerMessage(getId(),
-                    PlaySoundEffectButtonInventoryPacket.class,
-                    PlaySoundEffectButtonInventoryPacket::toBytes,
-                    PlaySoundEffectButtonInventoryPacket::new,
-                    PlaySoundEffectButtonInventoryPacket::handle,
+                    StopSoundEffectPacket.class,
+                    StopSoundEffectPacket::toBytes,
+                    StopSoundEffectPacket::new,
+                    StopSoundEffectPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_CLIENT));
             INSTANCE.registerMessage(getId(),
                     PressSoundEffectButtonInInventoryPacket.class,

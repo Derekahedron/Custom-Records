@@ -1,5 +1,6 @@
 package derekahedron.customrecords.util.slotreference;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -7,6 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Optional;
 
 public interface SlotReference {
+
+    EmptySlotReference EMPTY = new EmptySlotReference();
+    Codec<SlotReference> CODEC = SlotReferenceSerializers.REGISTRY.get().getCodec()
+            .dispatch(
+                    SlotReference::getSerializer,
+                    SlotReferenceSerializer::getCodec);
 
     /**
      * Gets the stack in the referenced slot for a given player.
@@ -29,7 +36,7 @@ public interface SlotReference {
 
     static SlotReference fromNetwork(FriendlyByteBuf buffer) {
         SlotReferenceSerializer<? extends SlotReference> serializer = buffer.readRegistryIdUnsafe(SlotReferenceSerializers.REGISTRY.get());
-        return serializer == null ? new EmptySlotReference() : serializer.fromNetwork(buffer);
+        return serializer == null ? SlotReference.EMPTY : serializer.fromNetwork(buffer);
     }
 
     static void toNetwork(FriendlyByteBuf buffer, SlotReference slotReference) {

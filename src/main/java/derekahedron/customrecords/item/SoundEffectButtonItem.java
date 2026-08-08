@@ -1,8 +1,6 @@
 package derekahedron.customrecords.item;
 
 import derekahedron.customrecords.block.AbstractSoundEffectButtonBlock;
-import derekahedron.customrecords.client.network.PlaySoundEffectButtonPacketHandler;
-import derekahedron.customrecords.client.util.ClientActiveSoundsManager;
 import derekahedron.customrecords.client.util.ClientPressedSoundEffectButtonsManager;
 import derekahedron.customrecords.network.*;
 import derekahedron.customrecords.stats.CRStats;
@@ -157,8 +155,8 @@ public class SoundEffectButtonItem extends BlockItem {
                     1.0F);
         }
 
-        if (soundEffect != null) {
-            playSound(player, slotReference, soundEffect, isGlobal, updatePlayer);
+        if (soundEffect != null && player instanceof ServerPlayer serverPlayer) {
+            playSound(serverPlayer, slotReference, soundEffect, isGlobal);
         }
 
         pressButton(player, slotReference, updatePlayer);
@@ -246,36 +244,28 @@ public class SoundEffectButtonItem extends BlockItem {
                 .orElse(false);
     }
 
-    public void playSound(Player player, SlotReference slotReference, SoundEvent soundEffect, boolean isGlobal, boolean updatePlayer) {
-        if (player instanceof ServerPlayer serverPlayer) {
-            if (isGlobal) {
-                CRPacketHandler.INSTANCE.send(
-                        updatePlayer
-                                ? PacketDistributor.ALL.noArg()
-                                : CRPacketHandler.ALL_BUT_PLAYER.with(() -> serverPlayer),
-                        new PlaySoundEffectButtonInventoryPacket(
-                                player.getUUID(),
-                                slotReference,
-                                soundEffect,
-                                true));
-            } else {
-                CRPacketHandler.INSTANCE.send(
-                        CRUtil.withinDistance(serverPlayer, AbstractSoundEffectButtonBlock.SOUND_EVENT_RADIUS, updatePlayer ? null : serverPlayer),
-                        new PlaySoundEffectButtonInventoryPacket(
-                                player.getUUID(),
-                                slotReference,
-                                soundEffect,
-                                false));
-            }
-
-            new SoundEffectCallback(serverPlayer, slotReference, isGlobal).add();
-        } else {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                    ClientActiveSoundsManager.playSoundInstance(
+    public void playSound(ServerPlayer player, SlotReference slotReference, SoundEvent soundEffect, boolean isGlobal) {
+        if (isGlobal) {
+            CRPacketHandler.INSTANCE.send(
+                    PacketDistributor.ALL.noArg(),
+                    new StartSoundEffectPacket(
                             player.getUUID(),
                             slotReference,
-                            PlaySoundEffectButtonPacketHandler.globalSoundInstance(soundEffect, player.level().random)));
+                            soundEffect,
+                            player.level().random.nextLong(),
+                            true));
+        } else {
+            CRPacketHandler.INSTANCE.send(
+                    CRUtil.withinDistance(player, AbstractSoundEffectButtonBlock.SOUND_EVENT_RADIUS, null),
+                    new StartSoundEffectPacket(
+                            player.getUUID(),
+                            slotReference,
+                            soundEffect,
+                            player.level().random.nextLong(),
+                            false));
         }
+
+        new SoundEffectCallback(player, slotReference, isGlobal).add();
     }
 
     public void stopSound(Player player, SlotReference slotReference, boolean isGlobal, boolean updatePlayer) {
@@ -285,19 +275,17 @@ public class SoundEffectButtonItem extends BlockItem {
                         updatePlayer
                                 ? PacketDistributor.ALL.noArg()
                                 : CRPacketHandler.ALL_BUT_PLAYER.with(() -> serverPlayer),
-                        new PlaySoundEffectButtonInventoryPacket(
+                        new StopSoundEffectPacket(
                                 player.getUUID(),
-                                slotReference,
-                                true));
+                                slotReference));
             } else {
                 CRPacketHandler.INSTANCE.send(
                         updatePlayer
                                 ? PacketDistributor.DIMENSION.with(player.level()::dimension)
                                 : CRPacketHandler.DIMENSION_EXCEPT_PLAYER.with(() -> serverPlayer),
-                        new PlaySoundEffectButtonInventoryPacket(
+                        new StopSoundEffectPacket(
                                 player.getUUID(),
-                                slotReference,
-                                false));
+                                slotReference));
             }
         }
     }
@@ -338,11 +326,9 @@ public class SoundEffectButtonItem extends BlockItem {
             } else {
                 CRPacketHandler.INSTANCE.send(
                         PacketDistributor.ALL.noArg(),
-                        new PlaySoundEffectButtonInventoryPacket(
+                        new StopSoundEffectPacket(
                                 playerId,
-                                this.slotReference,
-                                Optional.empty(),
-                                true));
+                                slotReference));
             }
         }
     }

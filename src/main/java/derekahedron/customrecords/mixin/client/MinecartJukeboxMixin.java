@@ -15,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecartJukebox.class)
 public class MinecartJukeboxMixin {
 
-    @Shadow
+    @Shadow(remap = false)
     private ItemStack disc;
 
-    @Shadow
+    @Shadow(remap = false)
     private MinecartJukebox.JukeboxCartSoundInstance sound;
 
     @Inject(at = @At("HEAD"), method = "startPlaying", cancellable = true, remap = false)

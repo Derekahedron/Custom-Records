@@ -1,5 +1,7 @@
 package derekahedron.customrecords.util.slotreference;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +11,15 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public record NestedSlotReference(SlotReference slotReference, int slotIndex) implements SlotReference {
+
+    public static final Codec<NestedSlotReference> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            SlotReference.CODEC
+                    .fieldOf("slot_reference")
+                    .forGetter(NestedSlotReference::slotReference),
+            Codec.INT
+                    .fieldOf("slot_index")
+                    .forGetter(NestedSlotReference::slotIndex)
+    ).apply(instance, NestedSlotReference::new));
 
     @Override
     public Optional<ItemStack> getStackForPlayer(Player player) {
@@ -41,6 +52,11 @@ public record NestedSlotReference(SlotReference slotReference, int slotIndex) im
         public void toNetwork(FriendlyByteBuf buffer, NestedSlotReference slotReference) {
             SlotReference.toNetwork(buffer, slotReference.slotReference);
             buffer.writeInt(slotReference.slotIndex);
+        }
+
+        @Override
+        public Codec<NestedSlotReference> getCodec() {
+            return CODEC;
         }
     }
 

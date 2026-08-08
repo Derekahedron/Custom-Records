@@ -1,5 +1,7 @@
 package derekahedron.customrecords.compat.curios;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import derekahedron.customrecords.util.slotreference.SlotReference;
 import derekahedron.customrecords.util.slotreference.SlotReferenceEvent;
 import derekahedron.customrecords.util.slotreference.SlotReferenceSerializer;
@@ -16,6 +18,15 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public record CuriosSlotReference(String identifier, int index) implements SlotReference {
+
+    public static final Codec<CuriosSlotReference> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.STRING
+                    .fieldOf("identifier")
+                    .forGetter(CuriosSlotReference::identifier),
+            Codec.INT
+                    .fieldOf("index")
+                    .forGetter(CuriosSlotReference::index)
+    ).apply(instance, CuriosSlotReference::new));
 
     @Override
     public Optional<ItemStack> getStackForPlayer(Player player) {
@@ -42,6 +53,11 @@ public record CuriosSlotReference(String identifier, int index) implements SlotR
         public void toNetwork(FriendlyByteBuf buffer, CuriosSlotReference slotReference) {
             buffer.writeUtf(slotReference.identifier);
             buffer.writeVarInt(slotReference.index);
+        }
+
+        @Override
+        public Codec<CuriosSlotReference> getCodec() {
+            return CODEC;
         }
     }
 

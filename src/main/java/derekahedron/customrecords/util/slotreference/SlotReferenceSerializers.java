@@ -23,7 +23,7 @@ public class SlotReferenceSerializers {
     public static final RegistryObject<SlotReferenceSerializer<NestedSlotReference>> NESTED =
             SLOT_REFERENCE_SERIALIZERS.register("nested", NestedSlotReference.Serializer::new);
 
-    public static final Supplier<IForgeRegistry<SlotReferenceSerializer<?>>> REGISTRY =
+    public static final Supplier<IForgeRegistry<SlotReferenceSerializer<? extends SlotReference>>> REGISTRY =
             SLOT_REFERENCE_SERIALIZERS.makeRegistry(() -> new RegistryBuilder<SlotReferenceSerializer<?>>()
                     .setDefaultKey(EMPTY.getId())
                     .setName(CRRegistryKeys.SLOT_REFERENCE_SERIALIZER.location()));

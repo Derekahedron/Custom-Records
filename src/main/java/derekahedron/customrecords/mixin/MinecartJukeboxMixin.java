@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MinecartJukebox.class)
 public class MinecartJukeboxMixin {
 
-    @Shadow
+    @Shadow(remap = false)
     private ItemStack disc;
 
     @Inject(at = @At("HEAD"), method = "getComparatorOutput", cancellable = true, remap = false)

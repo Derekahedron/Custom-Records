@@ -1,7 +1,8 @@
 package derekahedron.customrecords.block;
 
 import derekahedron.customrecords.network.CRPacketHandler;
-import derekahedron.customrecords.network.PlaySoundEffectButtonPacket;
+import derekahedron.customrecords.network.StartSoundEffectPacket;
+import derekahedron.customrecords.network.StopSoundEffectPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
@@ -21,10 +22,11 @@ public class GlobalSoundEffectButtonBlock extends MetalSoundEffectButtonBlock {
         if (!level.isClientSide()) {
             CRPacketHandler.INSTANCE.send(
                     PacketDistributor.ALL.noArg(),
-                    new PlaySoundEffectButtonPacket(
+                    new StartSoundEffectPacket(
                             level.dimension(),
                             pos,
                             soundEffect,
+                            level.random.nextLong(),
                             true));
         }
     }
@@ -34,10 +36,9 @@ public class GlobalSoundEffectButtonBlock extends MetalSoundEffectButtonBlock {
         if (!isMoving && !state.is(newState.getBlock()) && !level.isClientSide()) {
             CRPacketHandler.INSTANCE.send(
                     PacketDistributor.ALL.noArg(),
-                    new PlaySoundEffectButtonPacket(
+                    new StopSoundEffectPacket(
                             level.dimension(),
-                            pos,
-                            true));
+                            pos));
         }
         super.onRemove(state, level, pos, newState, isMoving);
     }
