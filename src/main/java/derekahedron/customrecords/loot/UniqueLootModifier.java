@@ -49,7 +49,7 @@ public class UniqueLootModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        UniqueLootData data = UniqueLootData.get(context.getLevel());
+        UniqueLootData data = UniqueLootData.get(context.getLevel().getServer());
         List<Entry> validEntries = items.stream()
                 .filter(entry -> data.getNumRecords(entry.name) < entry.maxItems)
                 .toList();
@@ -96,20 +96,13 @@ public class UniqueLootModifier extends LootModifier {
 
             // Get latest time that the player has gotten a unique entry
             long now = System.currentTimeMillis();
-            if (playerUUID.isPresent() && cooldown > 0) {
-                OptionalLong latestTimestamp = items.stream()
-                        .map(entry -> data.getRecordTimestamp(playerUUID.get(), entry.name))
-                        .filter(Optional::isPresent)
-                        .mapToLong(Optional::get)
-                        .max();
-
-                if (latestTimestamp.isPresent()) {
-                    long timeSince = now - latestTimestamp.getAsLong();
-
-                    if (timeSince >= 0 && timeSince < cooldown) {
-                        if (blockDuringCooldown || context.getRandom().nextFloat() >= (float) timeSince / cooldown) {
-                            return generatedLoot;
-                        }
+            if (playerUUID.isPresent()) {
+                long timeRemaining = getTimeRemaining(data, playerUUID.get(), now);
+                if (timeRemaining > 0) {
+                    if (blockDuringCooldown
+                            || timeRemaining >= cooldown
+                            || context.getRandom().nextFloat() >= (float) (cooldown - timeRemaining) / cooldown) {
+                        return generatedLoot;
                     }
                 }
             }
@@ -128,6 +121,23 @@ public class UniqueLootModifier extends LootModifier {
         }
 
         return generatedLoot;
+    }
+
+    public OptionalLong getLatestTimestamp(UniqueLootData data, UUID playerUUID) {
+        return items.stream()
+                .map(entry -> data.getRecordTimestamp(playerUUID, entry.name))
+                .filter(Optional::isPresent)
+                .mapToLong(Optional::get)
+                .max();
+    }
+
+    public long getTimeRemaining(UniqueLootData data, UUID playerUUID, long now) {
+        if (cooldown <= 0) return 0;
+        return getLatestTimestamp(data, playerUUID).stream()
+                .map(latest -> latest + cooldown - now)
+                .filter(remaining -> remaining > 0)
+                .findFirst()
+                .orElse(0);
     }
 
     @Override

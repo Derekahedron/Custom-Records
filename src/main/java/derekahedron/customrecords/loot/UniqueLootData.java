@@ -8,7 +8,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 
@@ -34,8 +34,8 @@ public class UniqueLootData extends SavedData {
         this(0);
     }
 
-    public static UniqueLootData get(ServerLevel level) {
-        return level.getServer().overworld().getDataStorage()
+    public static UniqueLootData get(MinecraftServer server) {
+        return server.overworld().getDataStorage()
                 .computeIfAbsent(UniqueLootData::load, UniqueLootData::new, STORAGE_KEY);
     }
 
