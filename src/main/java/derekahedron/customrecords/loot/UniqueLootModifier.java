@@ -124,7 +124,7 @@ public class UniqueLootModifier extends LootModifier {
                     pos,
                     context.getLevel().dimension(),
                     now));
-            generatedLoot.add(entry.item);
+            generatedLoot.add(entry.item.copy());
         }
 
         return generatedLoot;
