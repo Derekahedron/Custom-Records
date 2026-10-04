@@ -14,6 +14,7 @@ import derekahedron.customrecords.network.CRPacketHandler;
 import derekahedron.customrecords.registry.CRRegistryKeys;
 import com.mojang.logging.LogUtils;
 import derekahedron.customrecords.sound.CRSoundEvents;
+import derekahedron.customrecords.sound.JukeboxTrack;
 import derekahedron.customrecords.stats.CRStats;
 import derekahedron.customrecords.util.slotreference.NestedSlotReference;
 import derekahedron.customrecords.util.slotreference.SlotReferenceSerializers;
@@ -21,6 +22,7 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.BusBuilder;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
@@ -57,6 +59,8 @@ public class CustomRecords {
         modEventBus.addListener(CRStats::initialize);
 
         EVENT_BUS.addListener(NestedSlotReference::expandSlotReferences);
+        EVENT_BUS.addListener(EventPriority.HIGHEST, JukeboxTrack::getVanillaTrack);
+        EVENT_BUS.addListener(JukeboxTrack::getCustomTrack);
 
         if (ModList.get().isLoaded("sophisticatedcore")) {
             try {

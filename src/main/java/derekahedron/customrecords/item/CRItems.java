@@ -185,4 +185,19 @@ public class CRItems {
                                     .stacksTo(1)
                                     .fireResistant()
                                     .rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<PortableJukeboxItem> PORTABLE_JUKEBOX =
+            ITEMS.register("portable_jukebox", () ->
+                    new PortableJukeboxItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.UNCOMMON)));
+
+    public static final RegistryObject<PortableGlobalJukeboxItem> PORTABLE_GLOBAL_JUKEBOX =
+            ITEMS.register("portable_global_jukebox", () ->
+                    new PortableGlobalJukeboxItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .fireResistant()
+                                    .rarity(Rarity.EPIC)));
 }

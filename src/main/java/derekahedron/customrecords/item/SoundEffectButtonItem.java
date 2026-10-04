@@ -205,7 +205,7 @@ public class SoundEffectButtonItem extends BlockItem {
             new PressedCallback(serverPlayer, slotReference).add();
         } else {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                    ClientPressedSoundEffectButtonsManager.setPressed(slotReference, true));
+                    ClientPressedSoundEffectButtonsManager.setPressed(player, slotReference, true));
         }
     }
 
@@ -233,7 +233,7 @@ public class SoundEffectButtonItem extends BlockItem {
                                     false)));
         } else {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
-                    ClientPressedSoundEffectButtonsManager.setPressed(slotReference, false));
+                    ClientPressedSoundEffectButtonsManager.setPressed(player, slotReference, false));
         }
     }
 

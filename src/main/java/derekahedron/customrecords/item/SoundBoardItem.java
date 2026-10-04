@@ -1,26 +1,16 @@
 package derekahedron.customrecords.item;
 
 import derekahedron.customrecords.inventory.SoundBoardMenu;
-import derekahedron.customrecords.network.CRPacketHandler;
-import derekahedron.customrecords.network.OpenSoundBoardPacket;
-import derekahedron.customrecords.util.CRUtil;
 import derekahedron.customrecords.util.slotreference.SlotReference;
-import derekahedron.customrecords.util.slotreference.SlotReferenceEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.entity.SlotAccess;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickAction;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.inventory.MenuConstructor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
@@ -28,7 +18,6 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,7 +25,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class SoundBoardItem extends Item {
+public class SoundBoardItem extends OpenableItem {
 
     public static final int MAX_DISPLAYED_BUTTONS = 5;
 
@@ -59,57 +48,9 @@ public class SoundBoardItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-
-        SlotReference slotReference = CRUtil.getSlotReference(player, hand);
-        if (stack != slotReference.getStackForPlayer(player).orElse(null)) {
-            return InteractionResultHolder.fail(stack);
-        }
-
-        SoundBoardItemHandler handler = slotReference.getStackForPlayer(player)
-                .flatMap(this::getHandler)
-                .orElse(null);
-        if (handler == null) return InteractionResultHolder.pass(stack);
-
-        if (player instanceof ServerPlayer serverPlayer) {
-            NetworkHooks.openScreen(
-                    serverPlayer,
-                    new SimpleMenuProvider(
-                            (containerId, inventory, p) ->
-                                    new SoundBoardMenu(containerId, inventory, slotReference),
-                            stack.getHoverName()),
-                    buffer -> SlotReference.toNetwork(buffer, slotReference));
-        }
-
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
-    }
-
-    @Override
-    public boolean overrideOtherStackedOnMe(
-            ItemStack stack,
-            ItemStack otherStack,
-            Slot slot,
-            ClickAction clickAction,
-            Player player,
-            SlotAccess slotAccess) {
-        if (clickAction != ClickAction.SECONDARY
-                || !otherStack.isEmpty()
-                || stack.getCount() > 1) return false;
-
-        SlotReference slotReference = SlotReferenceEvent.getSlotReference(player, slot.getItem()).orElse(null);
-        if (slotReference == null) return false;
-
-        SoundBoardItemHandler handler = slotReference.getStackForPlayer(player)
-                .flatMap(this::getHandler)
-                .orElse(null);
-        if (handler == null) return false;
-
-        if (player.level().isClientSide()) {
-            CRPacketHandler.INSTANCE.sendToServer(new OpenSoundBoardPacket(slotReference));
-        }
-
-        return true;
+    public MenuConstructor getMenuConstructor(SlotReference slotReference) {
+        return (containerId, inventory, player) ->
+                new SoundBoardMenu(containerId, inventory, slotReference);
     }
 
     @Override
@@ -144,10 +85,21 @@ public class SoundBoardItem extends Item {
         }
     }
 
+    @Override
     public Optional<SoundBoardItemHandler> getHandler(ItemStack stack) {
         return stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
                 .resolve()
                 .filter(SoundBoardItemHandler.class::isInstance)
                 .map(SoundBoardItemHandler.class::cast);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void onDestroyed(ItemEntity itemEntity) {
+        getHandler(itemEntity.getItem())
+                .ifPresent(handler ->
+                        ItemUtils.onContainerDestroyed(
+                                itemEntity,
+                                handler.buttons.stream().map(ItemStack::copy)));
     }
 }

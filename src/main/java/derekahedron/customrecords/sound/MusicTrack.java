@@ -9,6 +9,4 @@ public interface MusicTrack {
     int analogOutput();
 
     int lengthInTicks();
-
-    boolean inCreativeInventory();
 }

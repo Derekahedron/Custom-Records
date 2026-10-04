@@ -15,4 +15,8 @@ public class CRMenuTypes {
     public static final RegistryObject<MenuType<SoundBoardMenu>> SOUND_BOARD =
             MENU_TYPES.register("sound_board", () ->
                     IForgeMenuType.create(SoundBoardMenu::readItem));
+
+    public static final RegistryObject<MenuType<PortableJukeboxMenu>> PORTABLE_JUKEBOX =
+            MENU_TYPES.register("portable_jukebox", () ->
+                    IForgeMenuType.create(PortableJukeboxMenu::readItem));
 }

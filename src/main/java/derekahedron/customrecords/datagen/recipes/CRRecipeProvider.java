@@ -6,6 +6,7 @@ import derekahedron.customrecords.recipe.CopySoundEffectButtonRecipe;
 import derekahedron.customrecords.util.CRUtil;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -35,6 +36,17 @@ public class CRRecipeProvider extends RecipeProvider {
                 CRItems.CUSTOM_MUSIC_DISC.get(),
                 Ingredient.of(CRItems.CUSTOM_MUSIC_DISC_FRAGMENT.get()))
                 .save(consumer, CRUtil.location("custom_music_disc"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CRItems.PORTABLE_JUKEBOX.get())
+                .define('T', Items.RABBIT_HIDE)
+                .define('C', Items.CHEST)
+                .define('#', ItemTags.WOODEN_SLABS)
+                .define('X', Items.JUKEBOX)
+                .pattern("TCT")
+                .pattern("#X#")
+                .pattern("###")
+                .unlockedBy(getHasName(Items.JUKEBOX), has(Items.JUKEBOX))
+                .save(consumer);
 
         dyeSoundEffectButton(consumer, CRItems.WHITE_SOUND_EFFECT_BUTTON.get(), Items.WHITE_DYE);
         dyeSoundEffectButton(consumer, CRItems.ORANGE_SOUND_EFFECT_BUTTON.get(), Items.ORANGE_DYE);

@@ -42,7 +42,8 @@ public class ClientPressedSoundEffectButtonsManager {
         }
     }
 
-    public static void setPressed(SlotReference slotReference, boolean pressed) {
+    public static void setPressed(Player player, SlotReference slotReference, boolean pressed) {
+        if (player != Minecraft.getInstance().player) return;
         if (pressed) {
             PRESSED_SLOTS.add(slotReference);
         } else {

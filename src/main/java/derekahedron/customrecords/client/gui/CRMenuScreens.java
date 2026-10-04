@@ -7,7 +7,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class CRMenuScreens {
 
     public static void init(FMLClientSetupEvent event) {
-        event.enqueueWork(() ->
-                MenuScreens.register(CRMenuTypes.SOUND_BOARD.get(), SoundBoardScreen::new));
+        event.enqueueWork(() -> {
+            MenuScreens.register(CRMenuTypes.SOUND_BOARD.get(), SoundBoardScreen::new);
+            MenuScreens.register(CRMenuTypes.PORTABLE_JUKEBOX.get(), PortableJukeboxScreen::new);
+        });
     }
 }

@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import derekahedron.customrecords.CustomRecords;
+import derekahedron.customrecords.client.util.ClientJukeboxPlaybackManager;
 import derekahedron.customrecords.client.util.ClientPressedSoundEffectButtonsManager;
 import derekahedron.customrecords.client.util.ClientProxy;
 import derekahedron.customrecords.util.slotreference.SlotReference;
@@ -12,8 +13,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -66,8 +70,27 @@ public class CRUtil {
     public static boolean isButtonPressed(Player player, SlotReference slotReference) {
         return DistExecutor.unsafeRunForDist(
                 () -> () -> ClientPressedSoundEffectButtonsManager.isPressed(player, slotReference),
-                () -> () -> PressedSoundEffectButtonsManager.isPressed(player, slotReference)
-        );
+                () -> () -> PressedSoundEffectButtonsManager.isPressed(player, slotReference));
+    }
+
+    /**
+     * Gets the time to be used when checking if a playback should be ended. This accounts for the time spent in a
+     * paused world.
+     *
+     * @return the timestamp in milliseconds to use when checking the progress of a playback
+     */
+    public static long getCurrentTimeMillisForPlaybacks() {
+        return DistExecutor.unsafeRunForDist(
+                () -> ClientJukeboxPlaybackManager::getCurrentTimeMillisForPlaybacks,
+                () -> System::currentTimeMillis);
+    }
+
+    public static Style animatedColor(Style style) {
+        long cycleMillis = ticksToMillis(50);
+        float progress = (System.currentTimeMillis() % cycleMillis / (float) cycleMillis);
+        float hue = (1.0F - progress) % 1.0F;
+        int color = Mth.hsvToRgb(hue, 0.7F, 0.6F) & 0xFFFFFF;
+        return style.withColor(TextColor.fromRgb(color));
     }
 
     public static SlotReference getSlotReference(Player player, InteractionHand hand) {
@@ -146,5 +169,21 @@ public class CRUtil {
     public static <T> FriendlyByteBuf.Writer<Collection<T>> collectionWriter(
             FriendlyByteBuf.Writer<T> writer) {
         return (buffer, collection) -> buffer.writeCollection(collection, writer);
+    }
+
+    public static long ticksToMillis(int ticks) {
+        return ticks * 1000L / 20;
+    }
+
+    public static int millisToTicks(long millis) {
+        return (int) ((millis * 20L) / 1000L);
+    }
+
+    public static int ticksToSeconds(int ticks) {
+        return (ticks / 20) % 60;
+    }
+
+    public static int ticksToMinutes(int ticks) {
+        return (ticks / 20) / 60;
     }
 }

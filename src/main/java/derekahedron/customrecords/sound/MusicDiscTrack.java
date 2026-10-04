@@ -47,7 +47,7 @@ public record MusicDiscTrack(
                             .forGetter(MusicDiscTrack::hasFragment),
                     CRUtil.RARITY_CODEC
                             .optionalFieldOf("fragment_rarity")
-                            .forGetter(MusicDiscTrack::rarity),
+                            .forGetter(MusicDiscTrack::fragmentRarity),
                     TagKey.codec(Registries.DAMAGE_TYPE)
                             .optionalFieldOf("immune_to")
                             .forGetter(MusicDiscTrack::immuneTo),

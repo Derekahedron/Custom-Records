@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import derekahedron.customrecords.util.Tuple;
 import derekahedron.customrecords.util.slotreference.SlotReference;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.AbstractSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -15,13 +15,13 @@ import java.util.*;
 
 public class ClientActiveSoundsManager {
 
-    public static final Map<Tuple<ResourceKey<Level>, BlockPos>, AbstractSoundInstance> ACTIVE_BLOCK_SOUND_EFFECTS = Maps.newHashMap();
-    public static final Map<Tuple<UUID, SlotReference>, AbstractSoundInstance> ACTIVE_PLAYER_SOUND_EFFECTS = Maps.newHashMap();
+    public static final Map<Tuple<ResourceKey<Level>, BlockPos>, SoundInstance> ACTIVE_BLOCK_SOUND_EFFECTS = Maps.newHashMap();
+    public static final Map<Tuple<UUID, SlotReference>, SoundInstance> ACTIVE_PLAYER_SOUND_EFFECTS = Maps.newHashMap();
 
     public static void playSoundInstance(
             ResourceKey<Level> dimension,
             BlockPos blockPos,
-            @Nullable AbstractSoundInstance soundInstance) {
+            @Nullable SoundInstance soundInstance) {
         var key = new Tuple<>(dimension, blockPos);
         SoundManager soundManager = Minecraft.getInstance().getSoundManager();
 
@@ -39,7 +39,7 @@ public class ClientActiveSoundsManager {
     public static void playSoundInstance(
             UUID playerId,
             SlotReference reference,
-            @Nullable AbstractSoundInstance soundInstance) {
+            @Nullable SoundInstance soundInstance) {
         var key = new Tuple<>(playerId, reference);
         SoundManager soundManager = Minecraft.getInstance().getSoundManager();
 

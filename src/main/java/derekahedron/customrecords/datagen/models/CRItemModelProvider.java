@@ -21,5 +21,7 @@ public class CRItemModelProvider extends ItemModelProvider {
         basicItem(CRItems.CUSTOM_MUSIC_DISC.get());
         basicItem(CRItems.SOUND_BOARD.get());
         basicItem(CRItems.GLOBAL_SOUND_BOARD.get());
+        basicItem(CRItems.PORTABLE_JUKEBOX.get());
+        basicItem(CRItems.PORTABLE_GLOBAL_JUKEBOX.get());
     }
 }

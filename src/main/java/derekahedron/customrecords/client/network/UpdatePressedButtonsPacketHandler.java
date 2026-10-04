@@ -30,6 +30,9 @@ public class UpdatePressedButtonsPacketHandler {
     public static void handlePacket(UpdatePressedButtonPacket packet) {
         if (Minecraft.getInstance().player == null) return;
 
-        ClientPressedSoundEffectButtonsManager.setPressed(packet.slotReference(), packet.isPressed());
+        ClientPressedSoundEffectButtonsManager.setPressed(
+                Minecraft.getInstance().player,
+                packet.slotReference(),
+                packet.isPressed());
     }
 }

@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class CRPacketHandler {
-    private static final String PROTOCOL_VERSION = "3";
+    private static final String PROTOCOL_VERSION = "5";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             CRUtil.location("main"),
             () -> PROTOCOL_VERSION,
@@ -61,10 +61,10 @@ public class CRPacketHandler {
                     PressSoundEffectButtonInInventoryPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_SERVER));
             INSTANCE.registerMessage(getId(),
-                    OpenSoundBoardPacket.class,
-                    OpenSoundBoardPacket::toBytes,
-                    OpenSoundBoardPacket::new,
-                    OpenSoundBoardPacket::handle,
+                    OpenItemPacket.class,
+                    OpenItemPacket::toBytes,
+                    OpenItemPacket::new,
+                    OpenItemPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_SERVER));
             INSTANCE.registerMessage(getId(),
                     UpdateTrackedPressedButtonsPacket.class,
@@ -78,6 +78,48 @@ public class CRPacketHandler {
                     UpdatePressedButtonPacket::new,
                     UpdatePressedButtonPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+            INSTANCE.registerMessage(getId(),
+                    PlayJukeboxTrackPacket.class,
+                    PlayJukeboxTrackPacket::toBytes,
+                    PlayJukeboxTrackPacket::new,
+                    PlayJukeboxTrackPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+            INSTANCE.registerMessage(getId(),
+                    StopJukeboxTrackPacket.class,
+                    StopJukeboxTrackPacket::toBytes,
+                    StopJukeboxTrackPacket::new,
+                    StopJukeboxTrackPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+            INSTANCE.registerMessage(getId(),
+                    UpdateTrackedJukeboxPlaybacksPacket.class,
+                    UpdateTrackedJukeboxPlaybacksPacket::toBytes,
+                    UpdateTrackedJukeboxPlaybacksPacket::new,
+                    UpdateTrackedJukeboxPlaybacksPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+            INSTANCE.registerMessage(getId(),
+                    RemoveTrackedJukeboxPlaybacksPacket.class,
+                    RemoveTrackedJukeboxPlaybacksPacket::toBytes,
+                    RemoveTrackedJukeboxPlaybacksPacket::new,
+                    RemoveTrackedJukeboxPlaybacksPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+            INSTANCE.registerMessage(getId(),
+                    UpdatePortableJukeboxPacket.class,
+                    UpdatePortableJukeboxPacket::toBytes,
+                    UpdatePortableJukeboxPacket::new,
+                    UpdatePortableJukeboxPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_SERVER));
+            INSTANCE.registerMessage(getId(),
+                    UpdatePortableJukeboxShuffleSeedPacket.class,
+                    UpdatePortableJukeboxShuffleSeedPacket::toBytes,
+                    UpdatePortableJukeboxShuffleSeedPacket::new,
+                    UpdatePortableJukeboxShuffleSeedPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_SERVER));
+            INSTANCE.registerMessage(getId(),
+                    UpdatePortableJukeboxAutoplayPacket.class,
+                    UpdatePortableJukeboxAutoplayPacket::toBytes,
+                    UpdatePortableJukeboxAutoplayPacket::new,
+                    UpdatePortableJukeboxAutoplayPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_SERVER));
         });
     }
 

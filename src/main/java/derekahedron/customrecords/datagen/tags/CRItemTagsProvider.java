@@ -50,12 +50,14 @@ public class CRItemTagsProvider extends ItemTagsProvider {
         tag(CRItemTags.IMMUNE_TO_DAMAGE)
                 .add(CRItems.GOLDEN_RECORD.get())
                 .add(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get())
-                .add(CRItems.GLOBAL_SOUND_BOARD.get());
+                .add(CRItems.GLOBAL_SOUND_BOARD.get())
+                .add(CRItems.PORTABLE_GLOBAL_JUKEBOX.get());
 
         tag(CRItemTags.NEVER_DESPAWNS)
                 .add(CRItems.GOLDEN_RECORD.get())
                 .add(CRItems.GLOBAL_SOUND_EFFECT_BUTTON.get())
-                .add(CRItems.GLOBAL_SOUND_BOARD.get());
+                .add(CRItems.GLOBAL_SOUND_BOARD.get())
+                .add(CRItems.PORTABLE_GLOBAL_JUKEBOX.get());
 
         tag(CRItemTags.SOUND_EFFECT_BUTTONS)
                 .addTag(CRItemTags.DYEABLE_SOUND_EFFECT_BUTTONS)

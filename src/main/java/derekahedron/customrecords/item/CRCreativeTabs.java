@@ -18,6 +18,12 @@ import java.util.List;
 public class CRCreativeTabs {
     public static void initialize(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+
+            event.getEntries().putBefore(
+                    new ItemStack(Items.MUSIC_DISC_13),
+                    new ItemStack(CRItems.PORTABLE_JUKEBOX.get()),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+
             CustomMusicDiscItem customMusicDisc = CRItems.CUSTOM_MUSIC_DISC.get();
             GoldenRecordItem goldenRecord = CRItems.GOLDEN_RECORD.get();
             SilverRecordItem silverRecord = CRItems.SILVER_RECORD.get();
@@ -64,6 +70,7 @@ public class CRCreativeTabs {
             HolderLookup.Provider lookup = event.getParameters().holders();
             List<Holder.Reference<MusicDiscTrack>> musicDiscTracks = lookup.lookupOrThrow(CRRegistryKeys.MUSIC_DISK_TRACK)
                     .listElements()
+                    .filter(reference -> reference.get().hasFragment())
                     .filter(reference -> reference.get().inCreativeInventory())
                     .toList();
 

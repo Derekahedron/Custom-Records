@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "T": {
+      "item": "minecraft:rabbit_hide"
+    },
+    "X": {
+      "item": "minecraft:jukebox"
+    }
+  },
+  "pattern": [
+    "TCT",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "item": "customrecords:portable_jukebox"
+  },
+  "show_notification": true
+}
