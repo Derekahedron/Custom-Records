@@ -10,6 +10,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import derekahedron.customrecords.recipe.CopyGoldenRecordRecipe;
 import derekahedron.customrecords.recipe.CustomMusicDiscRecipe;
@@ -46,6 +47,17 @@ public class CRRecipeProvider extends RecipeProvider {
                 .pattern("#X#")
                 .pattern("###")
                 .unlockedBy(getHasName(Items.JUKEBOX), has(Items.JUKEBOX))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CRItems.PORTABLE_ENDER_JUKEBOX.get())
+                .define('T', Items.ENDER_EYE)
+                .define('C', Items.ENDER_CHEST)
+                .define('#', Tags.Items.OBSIDIAN)
+                .define('X', Items.JUKEBOX)
+                .pattern("TCT")
+                .pattern("#X#")
+                .pattern("###")
+                .unlockedBy(getHasName(Items.ENDER_CHEST), has(Items.ENDER_CHEST))
                 .save(consumer);
 
         dyeSoundEffectButton(consumer, CRItems.WHITE_SOUND_EFFECT_BUTTON.get(), Items.WHITE_DYE);

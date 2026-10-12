@@ -28,12 +28,18 @@ public class ClientJukeboxPlaybackEventHandler {
     }
 
     @SubscribeEvent
-    public static void onPauseTick(TickEvent.ClientTickEvent event) {
+    public static void onTick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
 
+        // Update last paused at here
         if (ClientJukeboxPlaybackManager.LAST_PAUSED_AT == null
                 && Minecraft.getInstance().isPaused()) {
             ClientJukeboxPlaybackManager.LAST_PAUSED_AT = System.currentTimeMillis();
+        }
+
+        // Refresh all sounds here
+        if (!Minecraft.getInstance().isPaused() && Minecraft.getInstance().level != null) {
+            ClientJukeboxPlaybackManager.refreshSounds();
         }
     }
 }

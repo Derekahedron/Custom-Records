@@ -1,6 +1,7 @@
 package derekahedron.customrecords.client.util;
 
 import com.google.common.collect.Maps;
+import derekahedron.customrecords.client.sound.CancellableSoundInstance;
 import derekahedron.customrecords.util.Tuple;
 import derekahedron.customrecords.util.slotreference.SlotReference;
 import net.minecraft.client.Minecraft;
@@ -44,7 +45,12 @@ public class ClientActiveSoundsManager {
         SoundManager soundManager = Minecraft.getInstance().getSoundManager();
 
         Optional.ofNullable(ACTIVE_PLAYER_SOUND_EFFECTS.get(key))
-                        .ifPresent(soundManager::stop);
+                        .ifPresent(existingSoundInstance -> {
+                            if (existingSoundInstance instanceof CancellableSoundInstance cancellable) {
+                                cancellable.cancel();
+                            }
+                            soundManager.stop(existingSoundInstance);
+                        });
 
         clearInactiveSoundEffects();
 
@@ -52,6 +58,12 @@ public class ClientActiveSoundsManager {
             Minecraft.getInstance().getSoundManager().play(soundInstance);
             ACTIVE_PLAYER_SOUND_EFFECTS.put(key, soundInstance);
         }
+    }
+
+    public static boolean isPlayingSoundInstance(UUID playerId, SlotReference reference) {
+        SoundInstance soundInstance = ACTIVE_PLAYER_SOUND_EFFECTS.get(new Tuple<>(playerId, reference));
+        if (soundInstance == null) return false;
+        return Minecraft.getInstance().getSoundManager().isActive(soundInstance);
     }
 
     public static void clearInactiveSoundEffects() {

@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuConstructor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,7 +43,11 @@ public class PortableJukeboxItem extends OpenableItem {
         return new ICapabilityProvider() {
 
             private final LazyOptional<IItemHandler> handler =
-                    LazyOptional.of(() -> new PortableJukeboxItemHandler(stack));
+                    LazyOptional.of(() -> {
+                        PortableJukeboxItemHandler handler = new PortableJukeboxItemHandler(stack);
+                        handler.load();
+                        return handler;
+                    });
 
             @Override
             public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction side) {
@@ -62,7 +67,8 @@ public class PortableJukeboxItem extends OpenableItem {
         super.appendHoverText(stack, level, components, advanced);
         if (level == null) return;
 
-        PortableJukeboxItemHandler handler = getHandler(stack).orElse(null);
+        Player player = CRUtil.getPlayer();
+        PortableJukeboxItemHandler handler = getHandler(stack, player).orElse(null);
         if (handler == null) return;
 
         boolean playing = DistExecutor.unsafeRunForDist(
@@ -103,7 +109,7 @@ public class PortableJukeboxItem extends OpenableItem {
     }
 
     @Override
-    public Optional<PortableJukeboxItemHandler> getHandler(ItemStack stack) {
+    public Optional<PortableJukeboxItemHandler> getHandler(ItemStack stack, @Nullable Player player) {
         return stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
                 .resolve()
                 .filter(PortableJukeboxItemHandler.class::isInstance)
@@ -113,7 +119,7 @@ public class PortableJukeboxItem extends OpenableItem {
     @Override
     @SuppressWarnings("deprecation")
     public void onDestroyed(ItemEntity itemEntity) {
-        getHandler(itemEntity.getItem())
+        getHandler(itemEntity.getItem(), null)
                 .ifPresent(handler ->
                         ItemUtils.onContainerDestroyed(
                                 itemEntity,

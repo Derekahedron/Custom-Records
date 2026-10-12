@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuConstructor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
@@ -57,7 +58,7 @@ public class SoundBoardItem extends OpenableItem {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag advanced) {
         super.appendHoverText(stack, level, components, advanced);
 
-        SoundBoardItemHandler handler = getHandler(stack).orElse(null);
+        SoundBoardItemHandler handler = getHandler(stack, null).orElse(null);
         if (handler == null) return;
 
         // A list of all, non-empty sound effects;
@@ -86,7 +87,7 @@ public class SoundBoardItem extends OpenableItem {
     }
 
     @Override
-    public Optional<SoundBoardItemHandler> getHandler(ItemStack stack) {
+    public Optional<SoundBoardItemHandler> getHandler(ItemStack stack, @Nullable Player player) {
         return stack.getCapability(ForgeCapabilities.ITEM_HANDLER)
                 .resolve()
                 .filter(SoundBoardItemHandler.class::isInstance)
@@ -96,7 +97,7 @@ public class SoundBoardItem extends OpenableItem {
     @Override
     @SuppressWarnings("deprecation")
     public void onDestroyed(ItemEntity itemEntity) {
-        getHandler(itemEntity.getItem())
+        getHandler(itemEntity.getItem(), null)
                 .ifPresent(handler ->
                         ItemUtils.onContainerDestroyed(
                                 itemEntity,

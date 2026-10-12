@@ -56,15 +56,19 @@ public class JukeboxPlaybackManager {
                 boolean playbackEnded = playback.hasEnded();
 
                 PortableJukeboxItemHandler handler = PortableJukeboxItemHandler.getHandler(player, slotReference)
-                        .filter(playback::isSameTrack)
                         .orElse(null);
 
                 if (handler == null) {
                     stopTrack(player, slotReference, playback.isGlobal, true);
                     slotIterator.remove();
+                } else if (!playback.isSameTrack(handler)) {
+                    handler.tickCount = 0;
+                    handler.save();
+                    stopTrack(player, slotReference, playback.isGlobal, true);
+                    slotIterator.remove();
                 } else if (playbackEnded && !handler.isAutoplay) {
                     handler.tickCount = 0;
-                    handler.saveTickCount();
+                    handler.save();
                     stopTrack(player, slotReference, playback.isGlobal, true);
                     slotIterator.remove();
                 } else if (playbackEnded) {
@@ -72,11 +76,9 @@ public class JukeboxPlaybackManager {
                             handler.selectedSlot,
                             1,
                             player.level().registryAccess());
-                    handler.saveSelectedSlot();
 
                     if (handler.selectedSlot == -1) {
                         handler.tickCount = 0;
-                        handler.saveTickCount();
                         stopTrack(player, slotReference, playback.isGlobal, true);
                         slotIterator.remove();
                     } else {
@@ -92,6 +94,7 @@ public class JukeboxPlaybackManager {
                             slotEntry.setValue(newPlayback);
                         }
                     }
+                    handler.save();
                 }
             }
 

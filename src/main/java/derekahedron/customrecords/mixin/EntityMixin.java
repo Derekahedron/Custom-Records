@@ -20,8 +20,7 @@ public class EntityMixin {
     @Inject(
             method = "isInvulnerableTo",
             at = @At("RETURN"),
-            cancellable = true
-    )
+            cancellable = true)
     private void isInvulnerableTo(DamageSource source, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) return;
 

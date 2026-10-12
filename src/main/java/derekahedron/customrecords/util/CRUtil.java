@@ -56,8 +56,14 @@ public class CRUtil {
     public static RegistryAccess getRegistryAccess() {
         return DistExecutor.unsafeRunForDist(
                 () -> ClientProxy::getClientRegistryAccess,
-                () -> () -> ServerLifecycleHooks.getCurrentServer().registryAccess()
-        );
+                () -> () -> ServerLifecycleHooks.getCurrentServer().registryAccess());
+    }
+
+    @Nullable
+    public static Player getPlayer() {
+        return DistExecutor.unsafeRunForDist(
+                () -> ClientProxy::getClientPlayer,
+                () -> () -> null);
     }
 
     /**

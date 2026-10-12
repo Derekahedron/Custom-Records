@@ -86,7 +86,6 @@ public record PortableJukeboxContainer(Player player, SlotReference slotReferenc
 
     @Override
     public void setChanged() {
-        getHandler().ifPresent(PortableJukeboxItemHandler::save);
     }
 
     @Override

@@ -5,6 +5,7 @@ import derekahedron.customrecords.block.entity.CRBlockEntityTypes;
 import derekahedron.customrecords.client.CustomRecordsClient;
 import derekahedron.customrecords.compat.curios.CuriosCompat;
 import derekahedron.customrecords.compat.sophisticatedcore.SophisticatedCompat;
+import derekahedron.customrecords.event.EnderJukeboxStorageEventHandler;
 import derekahedron.customrecords.inventory.CRMenuTypes;
 import derekahedron.customrecords.item.CRCreativeTabs;
 import derekahedron.customrecords.item.CRItems;
@@ -57,6 +58,7 @@ public class CustomRecords {
         modEventBus.addListener(CRRegistryKeys::init);
         modEventBus.addListener(CRCreativeTabs::initialize);
         modEventBus.addListener(CRStats::initialize);
+        modEventBus.addListener(EnderJukeboxStorageEventHandler::registerCapabilities);
 
         EVENT_BUS.addListener(NestedSlotReference::expandSlotReferences);
         EVENT_BUS.addListener(EventPriority.HIGHEST, JukeboxTrack::getVanillaTrack);

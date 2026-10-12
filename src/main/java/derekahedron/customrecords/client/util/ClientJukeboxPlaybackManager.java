@@ -124,8 +124,11 @@ public class ClientJukeboxPlaybackManager {
 
     public static void refreshSounds() {
         PLAYBACKS.forEach((playerId, playbacks) ->
-                playbacks.forEach((slotReference, playback) ->
-                        startTrack(playerId, slotReference, playback)));
+                playbacks.forEach((slotReference, playback) -> {
+                    if (!ClientActiveSoundsManager.isPlayingSoundInstance(playerId, slotReference)) {
+                        startTrack(playerId, slotReference, playback);
+                    }
+                }));
     }
 
     public static SoundInstance makeGlobalSoundInstance(SoundEvent soundEvent, int tickCount) {

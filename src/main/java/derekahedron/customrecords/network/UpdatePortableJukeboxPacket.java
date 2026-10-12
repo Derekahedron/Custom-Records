@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public record UpdatePortableJukeboxPacket(
         SlotReference slotReference,
-        int selectedIndex,
+        int selectedSlot,
         int tickCount,
         boolean isPlaying) {
 
@@ -25,7 +25,7 @@ public record UpdatePortableJukeboxPacket(
 
     public void toBytes(FriendlyByteBuf buffer) {
         SlotReference.toNetwork(buffer, slotReference);
-        buffer.writeInt(selectedIndex);
+        buffer.writeInt(selectedSlot);
         buffer.writeInt(tickCount);
         buffer.writeBoolean(isPlaying);
     }
@@ -39,22 +39,22 @@ public record UpdatePortableJukeboxPacket(
                     .orElse(null);
             if (handler == null) return;
             if (tickCount < 0) return;
+            if (!handler.isSlotValid(selectedSlot)) return;
 
-            handler.selectedSlot = selectedIndex;
+            handler.selectedSlot = selectedSlot;
 
             if (!isPlaying) {
                 handler.tickCount = tickCount;
-                handler.saveRecords();
                 JukeboxPlaybackManager.stopTrack(player, slotReference, handler.isGlobal(), false);
                 JukeboxPlaybackManager.removePlayback(player, slotReference);
             } else {
                 handler.tickCount = 0;
-                handler.saveRecords();
                 handler.createNewPlayback(player.level().registryAccess(), tickCount).ifPresent(playback -> {
                     JukeboxPlaybackManager.startTrack(player, slotReference, playback, false);
                     JukeboxPlaybackManager.addPlayback(player, slotReference, playback);
                 });
             }
+            handler.save();
         });
         context.get().setPacketHandled(true);
     }

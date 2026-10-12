@@ -30,7 +30,7 @@ public record OpenItemPacket(SlotReference slotReference) {
             if (stack == null) return;
             if (!(stack.getItem() instanceof OpenableItem item)) return;
 
-            item.getHandler(stack).ifPresent(handler ->
+            item.getHandler(stack, player).ifPresent(handler ->
                     NetworkHooks.openScreen(
                             player,
                             new SimpleMenuProvider(

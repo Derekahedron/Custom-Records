@@ -39,36 +39,15 @@ public class PortableJukeboxItemHandler implements IItemHandlerModifiable {
     public int tickCount;
     public boolean isAutoplay;
 
-    public PortableJukeboxItemHandler(ItemStack stack) {
+    protected PortableJukeboxItemHandler(ItemStack stack) {
         this.stack = stack;
-        this.records = NonNullList.withSize(NUM_RECORD_SLOTS, ItemStack.EMPTY);
-
-        CompoundTag tag = stack.getTagElement(TAG_PORTABLE_JUKEBOX);
-        if (tag != null) {
-            ContainerHelper.loadAllItems(tag, records);
-
-            if (tag.contains(TAG_SELECTED_SLOT, Tag.TAG_INT)) {
-                selectedSlot = tag.getInt(TAG_SELECTED_SLOT);
-            }
-
-            if (tag.contains(TAG_SHUFFLE_SEED, Tag.TAG_LONG)) {
-                shuffleSeed = tag.getLong(TAG_SHUFFLE_SEED);
-            }
-
-            if (tag.contains(TAG_TICK_COUNT, Tag.TAG_INT)) {
-                tickCount = tag.getInt(TAG_TICK_COUNT);
-            }
-
-            if (tag.contains(TAG_AUTOPLAY, Tag.TAG_BYTE)) {
-                isAutoplay = tag.getBoolean(TAG_AUTOPLAY);
-            }
-        }
+        this.records = NonNullList.withSize(getSlots(), ItemStack.EMPTY);
     }
 
     public static Optional<PortableJukeboxItemHandler> getHandler(Player player, SlotReference slotReference) {
         return slotReference.getStackForPlayer(player)
                 .flatMap(stack -> stack.getItem() instanceof PortableJukeboxItem item
-                        ? item.getHandler(stack)
+                        ? item.getHandler(stack, player)
                         : Optional.empty());
     }
 
@@ -125,6 +104,10 @@ public class PortableJukeboxItemHandler implements IItemHandlerModifiable {
         return slots;
     }
 
+    public int getSlotAtOffset(int slot, int offset) {
+        return getSlotAtOffset(slot, offset, null);
+    }
+
     public int getSlotAtOffset(int slot, int offset, @Nullable RegistryAccess registryAccess) {
         int slots = getSlots();
         slot = Math.floorMod(slot, slots);
@@ -135,7 +118,7 @@ public class PortableJukeboxItemHandler implements IItemHandlerModifiable {
         int start = 0;
         for (int i = 0; i < slots; i++) {
             int otherSlot = playOrder[i];
-            boolean isValid = isItemValid(otherSlot, getStackInSlot(otherSlot))
+            boolean isValid = isSlotValid(otherSlot)
                     && (registryAccess == null || getTrack(otherSlot, registryAccess).isPresent());
             if (slot == playOrder[i]) {
                 start = validSlots.size();
@@ -174,6 +157,13 @@ public class PortableJukeboxItemHandler implements IItemHandlerModifiable {
         if (slot < 0) return false;
         else if (slot >= getSlots()) return false;
         else return isValid(stack) && stack.getItem().canFitInsideContainerItems();
+    }
+
+    public boolean isSlotValid(int slot) {
+        if (slot < 0) return false;
+        else if (slot >= getSlots()) return false;
+        ItemStack stack = getStackInSlot(slot);
+        return isValid(stack) && stack.getItem().canFitInsideContainerItems();
     }
 
     @Override
@@ -243,32 +233,41 @@ public class PortableJukeboxItemHandler implements IItemHandlerModifiable {
 
     public void clear() {
         records.clear();
-        selectedSlot = -1;
-        tickCount = 0;
         save();
     }
 
     public void save() {
+        validateSelectedSlot();
         saveRecords();
+        saveSelectedSlot();
+        saveTickCount();
         saveShuffleSeed();
         saveAutoplay();
+    }
+
+    public void load() {
+        loadRecords();
+        loadSelectedSlot();
+        loadTickCount();
+        loadShuffleSeed();
+        loadAutoplay();
+        validateSelectedSlot();
     }
 
     public void saveRecords() {
         if (isEmpty()) {
             removeJukeboxTag("Items");
-            selectedSlot = -1;
-            tickCount = 0;
         } else {
             ContainerHelper.saveAllItems(getOrCreateJukeboxTag(), records);
-
-            if (!isItemValid(selectedSlot, getSelectedStack())) {
-                selectedSlot = getSlotAtOffset(selectedSlot, 1, null);
-                tickCount = 0;
-            }
         }
-        saveSelectedSlot();
-        saveTickCount();
+    }
+
+    public void loadRecords() {
+        records.clear();
+        CompoundTag tag = stack.getTagElement(TAG_PORTABLE_JUKEBOX);
+        if (tag != null) {
+            ContainerHelper.loadAllItems(tag, records);
+        }
     }
 
     public void saveSelectedSlot() {
@@ -279,11 +278,63 @@ public class PortableJukeboxItemHandler implements IItemHandlerModifiable {
         }
     }
 
+    public void loadSelectedSlot() {
+        CompoundTag tag = stack.getTagElement(TAG_PORTABLE_JUKEBOX);
+        if (tag != null && tag.contains(TAG_SELECTED_SLOT, Tag.TAG_INT)) {
+            selectedSlot = tag.getInt(TAG_SELECTED_SLOT);
+        } else {
+            selectedSlot = -1;
+        }
+    }
+
     public void saveTickCount() {
         if (tickCount != 0) {
             getOrCreateJukeboxTag().putInt(TAG_TICK_COUNT, tickCount);
         } else {
             removeJukeboxTag(TAG_TICK_COUNT);
+        }
+    }
+
+    public void loadTickCount() {
+        CompoundTag tag = stack.getTagElement(TAG_PORTABLE_JUKEBOX);
+        if (tag != null && tag.contains(TAG_TICK_COUNT, Tag.TAG_INT)) {
+            tickCount = tag.getInt(TAG_TICK_COUNT);
+        } else {
+            tickCount = 0;
+        }
+    }
+
+    public void saveAutoplay() {
+        if (isAutoplay) {
+            getOrCreateJukeboxTag().putBoolean(TAG_AUTOPLAY, true);
+        } else {
+            removeJukeboxTag(TAG_AUTOPLAY);
+        }
+    }
+
+    public void loadAutoplay() {
+        CompoundTag tag = stack.getTagElement(TAG_PORTABLE_JUKEBOX);
+        if (tag != null && tag.contains(TAG_AUTOPLAY, Tag.TAG_BYTE)) {
+            isAutoplay = tag.getBoolean(TAG_AUTOPLAY);
+        } else {
+            isAutoplay = false;
+        }
+    }
+
+    public void saveShuffleSeed() {
+        if (shuffleSeed != null) {
+            getOrCreateJukeboxTag().putLong(TAG_SHUFFLE_SEED, shuffleSeed);
+        } else {
+            removeJukeboxTag(TAG_SHUFFLE_SEED);
+        }
+    }
+
+    public void loadShuffleSeed() {
+        CompoundTag tag = stack.getTagElement(TAG_PORTABLE_JUKEBOX);
+        if (tag != null && tag.contains(TAG_SHUFFLE_SEED, Tag.TAG_LONG)) {
+            shuffleSeed = tag.getLong(TAG_SHUFFLE_SEED);
+        } else {
+            shuffleSeed = null;
         }
     }
 
@@ -301,23 +352,14 @@ public class PortableJukeboxItemHandler implements IItemHandlerModifiable {
         }
     }
 
-    public void saveAutoplay() {
-        if (isAutoplay) {
-            getOrCreateJukeboxTag().putBoolean(TAG_AUTOPLAY, true);
-        } else {
-            removeJukeboxTag(TAG_AUTOPLAY);
-        }
-    }
-
-    public void saveShuffleSeed() {
-        if (shuffleSeed != null) {
-            getOrCreateJukeboxTag().putLong(TAG_SHUFFLE_SEED, shuffleSeed);
-        } else {
-            removeJukeboxTag(TAG_SHUFFLE_SEED);
-        }
-    }
-
     public static boolean isValid(ItemStack stack) {
         return stack.is(ItemTags.MUSIC_DISCS);
+    }
+
+    public void validateSelectedSlot() {
+        if (!isSlotValid(selectedSlot)) {
+            selectedSlot = getSlotAtOffset(selectedSlot, 1);
+            tickCount = 0;
+        }
     }
 }

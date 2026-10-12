@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "forge:obsidian"
+    },
+    "C": {
+      "item": "minecraft:ender_chest"
+    },
+    "T": {
+      "item": "minecraft:ender_eye"
+    },
+    "X": {
+      "item": "minecraft:jukebox"
+    }
+  },
+  "pattern": [
+    "TCT",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "item": "customrecords:portable_ender_jukebox"
+  },
+  "show_notification": true
+}

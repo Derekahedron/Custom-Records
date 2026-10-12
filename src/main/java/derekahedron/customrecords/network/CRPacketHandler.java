@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class CRPacketHandler {
-    private static final String PROTOCOL_VERSION = "5";
+    private static final String PROTOCOL_VERSION = "6";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             CRUtil.location("main"),
             () -> PROTOCOL_VERSION,
@@ -120,6 +120,12 @@ public class CRPacketHandler {
                     UpdatePortableJukeboxAutoplayPacket::new,
                     UpdatePortableJukeboxAutoplayPacket::handle,
                     Optional.of(NetworkDirection.PLAY_TO_SERVER));
+            INSTANCE.registerMessage(getId(),
+                    SyncEnderJukeboxPacket.class,
+                    SyncEnderJukeboxPacket::toBytes,
+                    SyncEnderJukeboxPacket::new,
+                    SyncEnderJukeboxPacket::handle,
+                    Optional.of(NetworkDirection.PLAY_TO_CLIENT));
         });
     }
 

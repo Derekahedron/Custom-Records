@@ -33,7 +33,7 @@ public record UpdatePortableJukeboxShuffleSeedPacket(
             if (handler == null) return;
 
             handler.shuffleSeed = shuffleSeed.orElse(null);
-            handler.saveShuffleSeed();
+            handler.save();
         });
         context.get().setPacketHandled(true);
     }

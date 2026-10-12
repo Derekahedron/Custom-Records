@@ -1,10 +1,12 @@
 package derekahedron.customrecords.client.network;
 
 import derekahedron.customrecords.client.util.ClientJukeboxPlaybackManager;
+import derekahedron.customrecords.item.PortableEnderJukeboxInventory;
 import derekahedron.customrecords.item.PortableJukeboxItemHandler;
 import derekahedron.customrecords.network.*;
 import derekahedron.customrecords.util.JukeboxPlayback;
 import derekahedron.customrecords.util.Triple;
+import derekahedron.customrecords.util.Tuple;
 import derekahedron.customrecords.util.slotreference.SlotReference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +18,14 @@ public class JukeboxPlaybackPacketHandler {
     public static void handlePacket(PlayJukeboxTrackPacket packet) {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
+
+        if (!packet.playback().isGlobal
+                && !packet.playerId().equals(player.getUUID())
+                && player.level().getPlayerByUUID(packet.playerId()) == null) {
+            ClientJukeboxPlaybackManager.stopTrack(packet.playerId(), packet.slotReference());
+            ClientJukeboxPlaybackManager.removePlayback(packet.playerId(), packet.slotReference());
+            return;
+        }
 
         ClientJukeboxPlaybackManager.announceTrack(packet.playerId(), packet.slotReference(), packet.playback());
         ClientJukeboxPlaybackManager.startTrack(packet.playerId(), packet.slotReference(), packet.playback());
@@ -58,15 +68,26 @@ public class JukeboxPlaybackPacketHandler {
                         .ifPresent(handler -> {
                             handler.selectedSlot = playback.slot;
                             handler.tickCount = 0;
-                            handler.saveRecords();
+                            handler.save();
                         }),
                 () -> PortableJukeboxItemHandler.getHandler(player, slotReference).ifPresent(handler -> {
                     handler.tickCount = 0;
-                    handler.saveTickCount();
+                    handler.save();
                 }));
     }
 
     public static void handlePacket(RemoveTrackedJukeboxPlaybacksPacket packet) {
         ClientJukeboxPlaybackManager.clearPlaybacks(packet.playerId());
+    }
+
+    public static void handlePacket(SyncEnderJukeboxPacket packet) {
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        player.getCapability(PortableEnderJukeboxInventory.CAPABILITY).ifPresent(inventory -> {
+            inventory.records.clear();
+            packet.records().forEach(tuple ->
+                    inventory.records.add(new Tuple<>(tuple.a().copy(), tuple.b())));
+        });
     }
 }

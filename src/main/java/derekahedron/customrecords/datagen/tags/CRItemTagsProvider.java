@@ -95,5 +95,13 @@ public class CRItemTagsProvider extends ItemTagsProvider {
 
         tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", "sound_board")))
                 .addTag(CRItemTags.SOUND_BOARDS);
+
+        tag(CRItemTags.PORTABLE_JUKEBOXES)
+                .add(CRItems.PORTABLE_JUKEBOX.get())
+                .add(CRItems.PORTABLE_ENDER_JUKEBOX.get())
+                .add(CRItems.PORTABLE_GLOBAL_JUKEBOX.get());
+
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", "portable_jukebox")))
+                .addTag(CRItemTags.PORTABLE_JUKEBOXES);
     }
 }

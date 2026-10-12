@@ -27,4 +27,7 @@ public class CRItemTags {
 
     public static final TagKey<Item> GLOBAL_SOUND_BOARDS =
             ItemTags.create(CRUtil.location("global_sound_boards"));
+
+    public static final TagKey<Item> PORTABLE_JUKEBOXES =
+            ItemTags.create(CRUtil.location("portable_jukeboxes"));
 }

@@ -32,7 +32,7 @@ public record UpdatePortableJukeboxAutoplayPacket(
             if (handler == null) return;
 
             handler.isAutoplay = isAutoplay;
-            handler.saveAutoplay();
+            handler.save();
         });
         context.get().setPacketHandled(true);
     }

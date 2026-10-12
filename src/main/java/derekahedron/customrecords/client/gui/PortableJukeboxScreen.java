@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -37,7 +38,7 @@ import java.util.Optional;
 
 import static derekahedron.customrecords.inventory.PortableJukeboxMenu.SLOT_SIZE;
 
-public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeboxMenu> {
+public class PortableJukeboxScreen<T extends PortableJukeboxMenu> extends AbstractContainerScreen<T> {
 
     public static final ResourceLocation FOLDER = CRUtil.location("textures/gui/container/portable_jukebox/");
     public static final ResourceLocation BACKGROUND_TEXTURE = FOLDER.withSuffix("background.png");
@@ -49,7 +50,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
     @Nullable
     public DurationSlider durationSlider;
 
-    public PortableJukeboxScreen(PortableJukeboxMenu menu, Inventory inventory, Component title) {
+    public PortableJukeboxScreen(T menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
 
         imageWidth = PortableJukeboxMenu.WIDTH;
@@ -140,7 +141,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
         PortableJukeboxItemHandler handler = getHandler().orElse(null);
         if (handler == null) return;
         if (handler.selectedSlot == -1) return;
-        if (!handler.isItemValid(handler.selectedSlot, handler.getSelectedStack())) return;
+        if (!handler.isSlotValid(handler.selectedSlot)) return;
 
         int column = handler.selectedSlot % PortableJukeboxItemHandler.NUM_RECORD_COLUMNS;
         int row = handler.selectedSlot / PortableJukeboxItemHandler.NUM_RECORD_COLUMNS;
@@ -228,8 +229,9 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
             handled = super.mouseClicked(mouseX, mouseY, button);
         }
 
-        if (getFocused() instanceof PortableJukeboxScreenButton
-                || getFocused() instanceof DurationSlider) {
+        GuiEventListener focused = getFocused();
+        if (focused instanceof PortableJukeboxScreenButton
+                || focused instanceof PortableJukeboxScreen.DurationSlider) {
             setFocused(null);
         }
         return handled;
@@ -269,7 +271,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
 
         handler.createNewPlayback(getRegistryAccess(), newTickCount).ifPresent(playback -> {
             handler.tickCount = 0; // Set to 0 while playing
-            handler.saveTickCount();
+            handler.save();
 
             ClientJukeboxPlaybackManager.announceTrack(player.getUUID(), menu.slotReference, playback);
             ClientJukeboxPlaybackManager.startTrack(player.getUUID(), menu.slotReference, playback);
@@ -289,7 +291,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
         if (player == null) return;
 
         handler.tickCount = tickCount;
-        handler.saveTickCount();
+        handler.save();
 
         ClientJukeboxPlaybackManager.removePlayback(player.getUUID(), menu.slotReference);
         CRPacketHandler.INSTANCE.sendToServer(
@@ -304,7 +306,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
         Level level = getLevel();
         for (int i = 0; i < handler.getSlots(); i++) {
             if (i != handler.selectedSlot
-                    && handler.isItemValid(i, handler.getStackInSlot(i))
+                    && handler.isSlotValid(i)
                     && handler.getTrack(i, level.registryAccess()).isPresent()) {
                 return true;
             }
@@ -323,7 +325,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
     public void select(PortableJukeboxItemHandler handler, int slot) {
         boolean wasPlaying = isPlaying() && handler.getCurrentTrack(getRegistryAccess()).isPresent();
         handler.selectedSlot = slot;
-        handler.saveSelectedSlot();
+        handler.save();
 
         if (wasPlaying) {
             play(handler, 0);
@@ -359,7 +361,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
         if (handler == null) return false;
 
         int slot = hoveredSlot.getSlotIndex();
-        if (!handler.isItemValid(slot, handler.getStackInSlot(slot))) return false;
+        if (!handler.isSlotValid(slot)) return false;
 
         select(handler, slot);
         return true;
@@ -757,7 +759,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
         public void onPress() {
             getHandler().ifPresent(handler -> {
                 handler.isAutoplay = !handler.isAutoplay;
-                handler.saveAutoplay();
+                handler.save();
                 CRPacketHandler.INSTANCE.sendToServer(new UpdatePortableJukeboxAutoplayPacket(
                         menu.slotReference,
                         handler.isAutoplay));
@@ -803,7 +805,7 @@ public class PortableJukeboxScreen extends AbstractContainerScreen<PortableJukeb
                 } else {
                     handler.shuffleSeed = RandomSupport.generateUniqueSeed();
                 }
-                handler.saveShuffleSeed();
+                handler.save();
                 CRPacketHandler.INSTANCE.sendToServer(new UpdatePortableJukeboxShuffleSeedPacket(
                         menu.slotReference,
                         Optional.ofNullable(handler.shuffleSeed)));

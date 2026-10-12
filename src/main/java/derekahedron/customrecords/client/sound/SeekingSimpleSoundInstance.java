@@ -13,9 +13,10 @@ import net.minecraft.util.RandomSource;
 
 import java.util.concurrent.CompletableFuture;
 
-public class SeekingSimpleSoundInstance extends SimpleSoundInstance {
+public class SeekingSimpleSoundInstance extends SimpleSoundInstance implements CancellableSoundInstance {
 
     public final float offsetSeconds;
+    private volatile boolean isCancelled;
 
     public SeekingSimpleSoundInstance(
             ResourceLocation location,
@@ -44,6 +45,17 @@ public class SeekingSimpleSoundInstance extends SimpleSoundInstance {
 
     @Override
     public CompletableFuture<AudioStream> getStream(SoundBufferLibrary soundBuffers, Sound sound, boolean looping) {
-        return CRClientUtil.seek(super.getStream(soundBuffers, sound, looping), offsetSeconds);
+        return CRClientUtil.seek(super.getStream(soundBuffers, sound, looping), offsetSeconds)
+                .thenApply(this::wrapAudioStream);
+    }
+
+    @Override
+    public void cancel() {
+        isCancelled = true;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return isCancelled;
     }
 }

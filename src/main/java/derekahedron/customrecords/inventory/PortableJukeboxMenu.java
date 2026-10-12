@@ -11,9 +11,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -32,7 +32,6 @@ public class PortableJukeboxMenu extends AbstractContainerMenu {
     public static final int SLOT_SIZE = ITEM_SIZE + SLOT_BORDER * 2;
     public static final int WIDTH = 176;
     public static final int HEIGHT = 198;
-    public static final int NUM_CONTAINER_SLOTS = PortableJukeboxItemHandler.NUM_RECORD_SLOTS;
     public static final int CONTROLS_GAP = 2;
     public static final int BUTTON_SIZE = 14;
     public static final int BUTTON_GAP = 2;
@@ -43,7 +42,15 @@ public class PortableJukeboxMenu extends AbstractContainerMenu {
     public final PortableJukeboxContainer container;
 
     public PortableJukeboxMenu(int containerId, Inventory inventory, SlotReference slotReference) {
-        super(CRMenuTypes.PORTABLE_JUKEBOX.get(), containerId);
+        this(CRMenuTypes.PORTABLE_JUKEBOX.get(), containerId, inventory, slotReference);
+    }
+
+    protected PortableJukeboxMenu(
+            MenuType<?> menuType,
+            int containerId,
+            Inventory inventory,
+            SlotReference slotReference) {
+        super(menuType, containerId);
         this.slotReference = slotReference;
         this.container = new PortableJukeboxContainer(inventory.player, slotReference);
 
@@ -96,7 +103,7 @@ public class PortableJukeboxMenu extends AbstractContainerMenu {
     /**
      * The slot used by the jukebox, restricted to what the jukebox can accept.
      */
-    private static class RecordSlot extends Slot {
+    protected class RecordSlot extends Slot {
 
         public RecordSlot(Container container, int slotIndex, int x, int y) {
             super(container, slotIndex, x, y);
@@ -111,9 +118,22 @@ public class PortableJukeboxMenu extends AbstractContainerMenu {
         public boolean mayPlace(ItemStack stack) {
             return container.canPlaceItem(getSlotIndex(), stack);
         }
+
+        @Override
+        public void onTake(Player player, ItemStack stack) {
+            super.onTake(player, stack);
+            getHandler().ifPresent(PortableJukeboxItemHandler::save);
+        }
+
+        @Override
+        public void setByPlayer(ItemStack stack) {
+            getHandler().ifPresent(PortableJukeboxItemHandler::save);
+            super.set(stack);
+            getHandler().ifPresent(PortableJukeboxItemHandler::save);
+        }
     }
 
-    private class InventorySlot extends Slot {
+    protected class InventorySlot extends Slot {
 
         public InventorySlot(Container container, int slotIndex, int x, int y) {
             super(container, slotIndex, x, y);
@@ -131,10 +151,7 @@ public class PortableJukeboxMenu extends AbstractContainerMenu {
     public static PortableJukeboxMenu readItem(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
         SlotReference slotReference = SlotReference.fromNetwork(extraData);
 
-        return slotReference.getStackForPlayer(inventory.player)
-                .flatMap(stack -> stack.getCapability(ForgeCapabilities.ITEM_HANDLER).resolve())
-                .filter(PortableJukeboxItemHandler.class::isInstance)
-                .map(PortableJukeboxItemHandler.class::cast)
+        return PortableJukeboxItemHandler.getHandler(inventory.player, slotReference)
                 .map(handler -> new PortableJukeboxMenu(containerId, inventory, slotReference))
                 .orElse(null);
     }
@@ -146,7 +163,8 @@ public class PortableJukeboxMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int slotIndex) {
-        int menuSize = NUM_CONTAINER_SLOTS + 36;
+        int containerSize = container.getContainerSize();
+        int menuSize = slots.size();
 
         Slot slot = slots.get(slotIndex);
         if (!slot.hasItem()) return ItemStack.EMPTY;
@@ -154,12 +172,12 @@ public class PortableJukeboxMenu extends AbstractContainerMenu {
         ItemStack stack = slot.getItem();
         ItemStack copy = stack.copy();
 
-        if (slotIndex < NUM_CONTAINER_SLOTS) {
-            if (!moveItemStackTo(stack, NUM_CONTAINER_SLOTS, menuSize, true)) {
+        if (slotIndex < containerSize) {
+            if (!moveItemStackTo(stack, containerSize, menuSize, true)) {
                 return ItemStack.EMPTY;
             }
         } else {
-            if (!moveItemStackTo(stack, 0, NUM_CONTAINER_SLOTS, false)) {
+            if (!moveItemStackTo(stack, 0, containerSize, false)) {
                 return ItemStack.EMPTY;
             }
         }

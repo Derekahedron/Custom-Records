@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.network.NetworkHooks;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class OpenableItem extends Item {
@@ -38,7 +39,7 @@ public abstract class OpenableItem extends Item {
         }
 
         IItemHandlerModifiable handler = slotReference.getStackForPlayer(player)
-                .flatMap(this::getHandler)
+                .flatMap(heldStack -> getHandler(heldStack, player))
                 .orElse(null);
         if (handler == null) return InteractionResultHolder.pass(stack);
 
@@ -70,7 +71,7 @@ public abstract class OpenableItem extends Item {
         if (slotReference == null) return false;
 
         IItemHandlerModifiable handler = slotReference.getStackForPlayer(player)
-                .flatMap(this::getHandler)
+                .flatMap(heldStack -> getHandler(heldStack, player))
                 .orElse(null);
         if (handler == null) return false;
 
@@ -83,5 +84,5 @@ public abstract class OpenableItem extends Item {
 
     public abstract MenuConstructor getMenuConstructor(SlotReference slotReference);
 
-    public abstract Optional<? extends IItemHandlerModifiable> getHandler(ItemStack stack);
+    public abstract Optional<? extends IItemHandlerModifiable> getHandler(ItemStack stack, @Nullable Player player);
 }

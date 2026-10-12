@@ -23,6 +23,10 @@ public class CRCreativeTabs {
                     new ItemStack(Items.MUSIC_DISC_13),
                     new ItemStack(CRItems.PORTABLE_JUKEBOX.get()),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.getEntries().putAfter(
+                    new ItemStack(CRItems.PORTABLE_JUKEBOX.get()),
+                    new ItemStack(CRItems.PORTABLE_ENDER_JUKEBOX.get()),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 
             CustomMusicDiscItem customMusicDisc = CRItems.CUSTOM_MUSIC_DISC.get();
             GoldenRecordItem goldenRecord = CRItems.GOLDEN_RECORD.get();

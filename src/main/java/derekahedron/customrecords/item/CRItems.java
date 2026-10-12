@@ -193,6 +193,13 @@ public class CRItems {
                                     .stacksTo(1)
                                     .rarity(Rarity.UNCOMMON)));
 
+    public static final RegistryObject<PortableEnderJukeboxItem> PORTABLE_ENDER_JUKEBOX =
+            ITEMS.register("portable_ender_jukebox", () ->
+                    new PortableEnderJukeboxItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.UNCOMMON)));
+
     public static final RegistryObject<PortableGlobalJukeboxItem> PORTABLE_GLOBAL_JUKEBOX =
             ITEMS.register("portable_global_jukebox", () ->
                     new PortableGlobalJukeboxItem(

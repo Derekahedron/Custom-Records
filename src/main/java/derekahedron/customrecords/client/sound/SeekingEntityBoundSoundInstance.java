@@ -13,9 +13,10 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.concurrent.CompletableFuture;
 
-public class SeekingEntityBoundSoundInstance extends EntityBoundSoundInstance {
+public class SeekingEntityBoundSoundInstance extends EntityBoundSoundInstance implements CancellableSoundInstance {
 
     public final float offsetSeconds;
+    private volatile boolean isCancelled;
 
     public SeekingEntityBoundSoundInstance(
             SoundEvent soundEvent,
@@ -38,6 +39,17 @@ public class SeekingEntityBoundSoundInstance extends EntityBoundSoundInstance {
 
     @Override
     public CompletableFuture<AudioStream> getStream(SoundBufferLibrary soundBuffers, Sound sound, boolean looping) {
-        return CRClientUtil.seek(super.getStream(soundBuffers, sound, looping), offsetSeconds);
+        return CRClientUtil.seek(super.getStream(soundBuffers, sound, looping), offsetSeconds)
+                .thenApply(this::wrapAudioStream);
+    }
+
+    @Override
+    public void cancel() {
+        isCancelled = true;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return isCancelled;
     }
 }

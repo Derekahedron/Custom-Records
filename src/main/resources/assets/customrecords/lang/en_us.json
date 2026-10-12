@@ -15,6 +15,8 @@
   "item.customrecords.portable_jukebox.more": "and %s more...",
   "item.customrecords.portable_global_jukebox": "Portable Global Jukebox",
   "item.customrecords.portable_global_jukebox.more": "and %s more...",
+  "item.customrecords.portable_ender_jukebox": "Portable Ender Jukebox",
+  "item.customrecords.portable_ender_jukebox.more": "and %s more...",
 
   "container.customrecords.portable_jukebox.duration": "Duration",
   "container.customrecords.portable_jukebox.duration.time": "%s:%s / %s:%s",

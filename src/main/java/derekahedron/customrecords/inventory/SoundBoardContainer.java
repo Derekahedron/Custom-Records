@@ -15,7 +15,7 @@ public record SoundBoardContainer(Player player, SlotReference slotReference) im
         return slotReference.getStackForPlayer(player)
                 .flatMap(stack ->
                         stack.getItem() instanceof SoundBoardItem item
-                                ? item.getHandler(stack)
+                                ? item.getHandler(stack, player)
                                 : Optional.empty());
     }
 
